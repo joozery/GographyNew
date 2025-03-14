@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import Home from "./pages/Home";
 import AboutUsPage from "./pages/AboutUs";
 import TripPage from "./pages/Trip";
@@ -23,13 +22,6 @@ import AddTeamMemberForm from "./components/Dashboard/AddTeamMemberForm";
 import ManageCountry from "./components/Dashboard/ManageCountry";
 import ManagePartner from "./components/Dashboard/ManagePartner";
 import ManageGallery from "./components/Dashboard/ManageGallery";
-import Login from "./components/Dashboard/Login"; // ตรวจสอบให้แน่ใจว่ามีไฟล์ Login.js
-
-// ✅ ฟังก์ชันสำหรับป้องกันเส้นทาง Admin
-const ProtectedRoute = ({ children }) => {
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  return isLoggedIn ? children : <Navigate to="/login" />;
-};
 
 // ✅ ฟังก์ชัน Layout สำหรับกำหนด Navbar และ Footer
 const Layout = () => {
@@ -61,17 +53,8 @@ const App = () => {
           <Route path="/Blog" element={<ReviewPage />} />
         </Route>
 
-        <Route path="/login" element={<Login />} />
-
-        {/* ✅ Protected Routes for Dashboard */}
-        <Route
-          path="/admin/*"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        >
+        {/* ✅ เปิดให้เข้า Dashboard ได้เลย โดยไม่ต้องล็อกอิน */}
+        <Route path="/admin/*" element={<Dashboard />}>
           {/* ✅ Nested Routes สำหรับ Dashboard */}
           <Route index element={<DashboardOverview />} />
           <Route path="overview" element={<DashboardOverview />} />

@@ -85,7 +85,7 @@ export default function Footer() {
           <a href="#" className="flex justify-center items-center bg-[#ECF1F8] hover:bg-neutral-200  p-2 rounded-md">🏠 ไปหน้าแรก</a>
           <a href="#" className="flex justify-center items-center bg-[#3F72B70A] hover:bg-neutral-200 p-2 rounded-md">📸 ดูแพ็กเกจทัวร์</a>
           <a href="#" className="flex justify-center items-center bg-[#3F72B70A] hover:bg-neutral-200 p-2 rounded-md">📆 ดูตารางทริป</a>
-          <Link to="/Blog" className="flex justify-center items-center bg-[#ECF1F8] hover:bg-neutral-200 p-2 rounded-md">⭐ ดูรีวิวจากลูกค้า</Link>
+          <a href="https://www.facebook.com/gographyy/reviews" target="_blank" className="flex justify-center items-center bg-[#ECF1F8] hover:bg-neutral-200 p-2 rounded-md">⭐ ดูรีวิวจากลูกค้า</a>
           <a href="#" className="flex justify-center items-center bg-[#ECF1F8] hover:bg-neutral-200 p-2 rounded-md">📢 ติดต่อเรา</a>
           <a href="#" className="flex justify-center items-center bg-[#3F72B70A] hover:bg-neutral-200 p-2 rounded-md">📖 ดูบทความ</a>
         </div>

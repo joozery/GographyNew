@@ -20,7 +20,7 @@ const Navbar = () => {
           <Link to="/Trips" className="hover:text-[#305a92] transition">ทริปท่องเที่ยว</Link>
           {/*<Link to="/Aboutus" className="hover:text-[#305a92] transition">เกี่ยวกับเรา</Link>*/}
           <Link to="/Gallery" className="hover:text-[#305a92] transition">แกลเลอรี่</Link>
-          <Link to="/Blog" className="hover:text-[#305a92] transition">รีวิว</Link>
+          {/* <Link to="/Blog" className="hover:text-[#305a92] transition">รีวิว</Link> */}
         </ul>
 
         {/* ปุ่มติดต่อเรา */}

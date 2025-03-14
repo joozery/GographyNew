@@ -48,57 +48,66 @@ const Partner = () => {
           </span> */}
         </div>
       </div>
-      <Swiper
-        spaceBetween={50} // ระยะห่างระหว่าง slide
-        slidesPerView={3} // จำนวน slide ที่แสดงพร้อมกัน
-        navigation={false} // แสดงปุ่มนำทาง
-        mousewheel={true} // เปิดใช้งานการเลื่อนด้วย mousewheel
-        keyboard={true} // เปิดใช้งานการเลื่อนด้วย keyboard
-        modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]} // กำหนด modules ที่ใช้
-        autoplay={{
-          delay: 2500, // ระยะเวลาในการสไลด์ (milliseconds)
-          disableOnInteraction: false, // ให้ autoplay ทำงานต่อเมื่อมีการ interaction
-        }}
-        loop={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          480: {
-            slidesPerView: 2,
-            spaceBetween: 30,
-          },
-          640: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 50,
-          },
-        }} // กำหนด breakpoints เพื่อให้แสดงผล responsive
-      >
-        {partners.map((partner) => (
-          <SwiperSlide key={partner.id}>
-            <div
-              className="p-2 rounded-lg border shadow-md"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={partner.logo}
-                alt={partner.name}
-                className="max-w-full h-[150px] object-cover"
-                // style={{ maxWidth: "100%", maxHeight: "150px" }}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="relative w-full max-w-6xl mx-auto">
+        <div className="">
+          <Swiper
+            spaceBetween={50} // ระยะห่างระหว่าง slide
+            slidesPerView={3} // จำนวน slide ที่แสดงพร้อมกัน
+            navigation={false} // แสดงปุ่มนำทาง
+            mousewheel={true} // เปิดใช้งานการเลื่อนด้วย mousewheel
+            keyboard={true} // เปิดใช้งานการเลื่อนด้วย keyboard
+            modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]} // กำหนด modules ที่ใช้
+            autoplay={{
+              delay: 2500, // ระยะเวลาในการสไลด์ (milliseconds)
+              disableOnInteraction: false, // ให้ autoplay ทำงานต่อเมื่อมีการ interaction
+            }}
+            loop={true}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              480: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+              },
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 50,
+              },
+            }} // กำหนด breakpoints เพื่อให้แสดงผล responsive
+          >
+            {partners.map((partner) => (
+              <SwiperSlide key={partner.id}>
+                <div
+                  className="p-2 rounded-lg border shadow-md"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="max-w-full h-[150px] object-cover"
+                    // style={{ maxWidth: "100%", maxHeight: "150px" }}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {/* Left Overlay */}
+          <div className="absolute top-0 left-0 h-full w-36 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
+
+          {/* Right Overlay */}
+          <div className="absolute top-0 right-0 h-full w-36 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+        </div>
+      </div>
     </>
   );
 };

@@ -82,9 +82,9 @@ const ImageGallery = () => {
       <div className="absolute top-0 right-0 h-full w-36 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
 
       {/* View More Button */}
-      <div className="flex justify-center items-center mt-6 text-center">
-        <button className="flex space-x-2 items-center justify-center border rounded-full p-4 text-[#3F72B7] bg-[#ECF1F8] border-[#3F72B7] transition">
-          ดูรูปภาพเพิ่มเติม 
+      <div className="flex justify-center items-center mt-6 text-center ">
+        <button className="flex items-center justify-center gap-2 border rounded-full shadow-md px-4 py-2 text-[#3F72B7] bg-[#ECF1F8] hover:scale-105 border-[#3F72B7] transition">
+          <span>ดูรูปภาพเพิ่มเติม</span>
           <img src="./src/assets/icon/gallery.svg" alt="" className="w-6" />
         </button>
       </div>

@@ -18,7 +18,7 @@ const Navbar = () => {
         <ul className="hidden lg:flex gap-x-10 text-[#3F72B7] font-bai text-lg">
           <Link to="/" className="hover:text-[#305a92] transition">หน้าหลัก</Link>
           <Link to="/Trips" className="hover:text-[#305a92] transition">ทริปท่องเที่ยว</Link>
-          <Link to="/Aboutus" className="hover:text-[#305a92] transition">เกี่ยวกับเรา</Link>
+          {/*<Link to="/Aboutus" className="hover:text-[#305a92] transition">เกี่ยวกับเรา</Link>*/}
           <Link to="/Gallery" className="hover:text-[#305a92] transition">แกลเลอรี่</Link>
           <Link to="/Blog" className="hover:text-[#305a92] transition">รีวิว</Link>
         </ul>
@@ -45,7 +45,7 @@ const Navbar = () => {
             <Link to="/Trips" className="py-2 hover:text-[#305a92] transition" onClick={() => setIsOpen(false)}>ทริปท่องเที่ยว</Link>
             <Link to="/Aboutus" className="py-2 hover:text-[#305a92] transition" onClick={() => setIsOpen(false)}>เกี่ยวกับเรา</Link>
             <Link to="/Gallery" className="py-2 hover:text-[#305a92] transition" onClick={() => setIsOpen(false)}>แกลเลอรี่</Link>
-            <Link to="/Blog" className="py-2 hover:text-[#305a92] transition" onClick={() => setIsOpen(false)}>รีวิว</Link>
+            {/*<Link to="/Blog" className="py-2 hover:text-[#305a92] transition" onClick={() => setIsOpen(false)}>รีวิว</Link>*/}
             <button className="flex items-center justify-center gap-2 border border-gray-500 mx-6 px-3 py-2 rounded-md text-gray-700 hover:border-[#305a92] hover:text-[#305a92] transition" onClick={() => setIsOpen(false)}>
               <FiPhone className="text-lg" />
               ติดต่อเรา

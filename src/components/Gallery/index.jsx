@@ -3,6 +3,7 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import img from "../../assets/gallery/g2.png";
+import { LuImages } from "react-icons/lu";
 
 const ImageGallery = () => {
   const images = [
@@ -85,7 +86,7 @@ const ImageGallery = () => {
       <div className="flex justify-center items-center mt-6 text-center ">
         <button className="flex items-center justify-center gap-2 border rounded-full shadow-md px-4 py-2 text-[#3F72B7] bg-[#ECF1F8] hover:scale-105 border-[#3F72B7] transition">
           <span>ดูรูปภาพเพิ่มเติม</span>
-          <img src="./src/assets/icon/gallery.svg" alt="" className="w-6" />
+            <LuImages/>
         </button>
       </div>
     </div>

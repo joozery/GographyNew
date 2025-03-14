@@ -1,0 +1,264 @@
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f4f4;
+  font-family: 'Prompt', sans-serif;
+  overflow: hidden; /* ป้องกันเนื้อหาเกิน */
+}
+
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* ป้องกันเนื้อหาเกิน */
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto; /* เพิ่ม scroll หากเนื้อหาเกิน */
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  margin: 10px;
+}
+
+  
+  /* Sidebar Styles */
+  .sidebar {
+    width: 250px;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .sidebar-header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-menu {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+ 
+  
+
+  
+  
+  /* Header Styles */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .header-actions {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .header-button {
+    background: #1e293b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .header-button:hover {
+    background: #374151;
+  }
+  
+  .header-button.logout {
+    background: #ef4444;
+  }
+  
+  .header-button.logout:hover {
+    background: #dc2626;
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .main-content h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .main-content p {
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-widgets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .widget {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-weight: bold;
+  }
+
+  /* Hotels Section */
+.hotels-section {
+    margin-top: 20px;
+}
+
+.hotel-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.hotel-filters span {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background 0.3s;
+    font-weight: bold;
+}
+
+.hotel-filters .active {
+    background: #6d28d9;
+    color: white;
+}
+
+.hotel-cards {
+    display: flex;
+    gap: 20px;
+}
+
+.hotel-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.hotel-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Calendar Section */
+.availability-section {
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.calendar {
+    margin-top: 10px;
+}
+
+.month-selector {
+    background: #e5e7eb;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.calendar table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.calendar th, .calendar td {
+    text-align: center;
+    padding: 10px;
+}
+
+.calendar .highlight {
+    background: #6d28d9;
+    color: white;
+    border-radius: 50%;
+}
+
+/* Best Resorts Section */
+.best-resorts-section {
+    margin-top: 20px;
+}
+
+.resorts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.resort {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.resort img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.resort-info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.resort-price {
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.sidebar-custom {
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* สำหรับ IE และ Edge */
+  scrollbar-width: none; /* สำหรับ Firefox */
+}
+
+.sidebar-custom::-webkit-scrollbar {
+  display: none;
+}

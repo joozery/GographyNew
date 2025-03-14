@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ✅ ใช้ Bai Jamjuree เป็นฟอนต์หลักของเว็บไซต์ */
+body {
+  font-family: "Bai Jamjuree", sans-serif;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #4A5568;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .sidebar-item:hover {
+    background: #F3F4F6; 
+  }
+  
+  .sidebar-item.active {
+    background: #E2E8F0;
+    font-weight: bold;
+  }
+  
+  

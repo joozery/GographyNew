@@ -17,7 +17,18 @@ const ReviewFacebook = () => {
           </span>
         </div>
       </div>
-      <div class="elfsight-app-d63cd569-4cfe-48f0-bbba-280a8b25752b" data-elfsight-app-lazy></div>
+      <div className="relative w-full max-w-6xl mx-auto">
+        <div
+          class="elfsight-app-d63cd569-4cfe-48f0-bbba-280a8b25752b"
+          data-elfsight-app-lazy
+        ></div>
+
+        {/* Left Overlay */}
+        <div className="absolute top-0 left-0 h-full w-12 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
+
+        {/* Right Overlay */}
+        <div className="absolute top-0 right-0 h-full w-12 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+      </div>
     </>
   );
 };

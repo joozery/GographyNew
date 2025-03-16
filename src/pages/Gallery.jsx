@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import CountryFlag from "../components/CountryFlag";
 
 const API_URL = "https://servergogo-app-209f1146e735.herokuapp.com/api/gallery";
 
@@ -65,7 +66,8 @@ const Gallery = () => {
           <div key={index} className="mt-12">
             {/* ✅ ชื่อประเทศ */}
             <div className="flex items-center gap-2">
-              <span className="text-2xl">{country.emoji}</span>
+              {/* <span className="text-2xl">{country.emoji}</span> */}
+              {country && <CountryFlag countryCodes={country.emoji} />}
               <h3 className="text-lg font-bold text-[#18283E]">
                 {country.name} / {country.nameth}
               </h3>
@@ -85,7 +87,7 @@ const Gallery = () => {
               </div>
             ) : (
               <Swiper
-              modules={[Autoplay]}
+                modules={[Autoplay]}
                 autoplay={{
                   delay: 2500,
                   disableOnInteraction: false,
@@ -107,8 +109,8 @@ const Gallery = () => {
                   },
                   // เมื่อขนาดหน้าจอ < 640px แสดง 1 รูป
                   320: {
-                      slidesPerView: 1
-                  }
+                    slidesPerView: 1,
+                  },
                 }}
                 className="mySwiper"
               >

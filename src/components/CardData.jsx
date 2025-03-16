@@ -3,15 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import axios from "axios";
+import CountryFlag from "./CountryFlag";
 
-const API_BASE_URL = "https://servergogo-app-209f1146e735.herokuapp.com/api/tours";
+const API_BASE_URL =
+  "https://servergogo-app-209f1146e735.herokuapp.com/api/tours";
 
 const TourCard = ({ tour, Success }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log(tour);
-  },[])
+  }, []);
   // ✅ ฟังก์ชันลบ
   const handleDelete = async () => {
     Swal.fire({
@@ -27,7 +29,7 @@ const TourCard = ({ tour, Success }) => {
         try {
           const result = await axios.delete(`${API_BASE_URL}/${tour.id}`);
           console.log(result);
-          if(result.status === 200){
+          if (result.status === 200) {
             Swal.fire("ลบสำเร็จ!", "ทัวร์ถูกลบแล้ว", "success");
           }
           Success();
@@ -42,17 +44,34 @@ const TourCard = ({ tour, Success }) => {
   return (
     <div className="w-full rounded overflow-hidden shadow-lg mt-2 bg-white">
       {tour.image ? (
-        <img className="w-full h-40 object-cover" src={tour.image} alt={tour.tour_name} />
+        <img
+          className="w-full h-40 object-cover"
+          src={tour.image}
+          alt={tour.tour_name}
+        />
       ) : (
-        <img className="w-full h-40 object-cover" src="https://placehold.co/600x400" alt="placeholder" />
+        <img
+          className="w-full h-40 object-cover"
+          src="https://placehold.co/600x400"
+          alt="placeholder"
+        />
       )}
       <div className="flex flex-col gap-2 px-5 pt-4">
-        <div className="font-bold text-xl mb-2">{tour.tour_name}</div>
-        <span className="text-gray-700 text-base">ประเทศ: {tour.country_name_th} ({tour.country_name} {tour.country_emoji})</span>
+        <div className="font-bold text-xl mb-1">{tour.tour_name}</div>
+        <CountryFlag countryCodes={tour.country_emoji} />
+        <span className="text-gray-700 text-base">
+          ประเทศ: {tour.country_name_th} ({tour.country_name})
+        </span>
         <span className="text-gray-700 text-base">ราคา: {tour.price} บาท</span>
-        <span className="text-gray-700 text-base">วันที่เริ่มต้น: {new Date(tour.start_date).toLocaleDateString()}</span>
-        <span className="text-gray-700 text-base">วันที่สิ้นสุด: {new Date(tour.end_date).toLocaleDateString()}</span>
-        <span className="text-gray-700 text-base">สถานที่: {tour.locations.join(", ")}</span>
+        <span className="text-gray-700 text-base">
+          วันที่เริ่มต้น: {new Date(tour.start_date).toLocaleDateString()}
+        </span>
+        <span className="text-gray-700 text-base">
+          วันที่สิ้นสุด: {new Date(tour.end_date).toLocaleDateString()}
+        </span>
+        <span className="text-gray-700 text-base">
+          สถานที่: {tour.locations.join(", ")}
+        </span>
       </div>
 
       {/* ✅ ปุ่มแก้ไข & ลบ */}

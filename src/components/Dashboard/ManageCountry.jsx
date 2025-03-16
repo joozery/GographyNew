@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2"; // ✅ ใช้ SweetAlert2
 import { FiTrash2, FiEdit } from "react-icons/fi";
 import { FaSpinner } from "react-icons/fa";
+import CountryFlag from "../CountryFlag";
 
 const API_URL =
   "https://servergogo-app-209f1146e735.herokuapp.com/api/countries";
@@ -161,10 +162,10 @@ const ManageCountry = () => {
         />
         <input
           type="text"
-          placeholder="Emoji (🇹🇭)"
+          placeholder="Code Flag"
           value={newEmoji}
           onChange={(e) => setNewEmoji(e.target.value)}
-          className="border p-2 rounded w-full text-center"
+          className="border p-2 rounded w-full"
         />
         <button
           onClick={addCountry}
@@ -186,13 +187,18 @@ const ManageCountry = () => {
         </div>
       ) : (
         <ul className="mt-4 border rounded-lg p-4 shadow-md bg-white">
-          {countries.map((country) => (
+          {countries.map((country, index) => (
             <li
-              key={country.id}
+              key={index}
               className="p-2 flex items-center justify-between border-b last:border-none"
             >
               <div className="flex items-center gap-2">
-                <span className="text-lg">{country.emoji}</span>
+                {/* <CountryFlag countryCode={`${country.emoji}`} /> */}
+                <div key={index}>
+                  {countries && (
+                    <CountryFlag countryCodes={country.emoji} />
+                  )}
+                </div>
                 {country.name} ({country.name_th})
               </div>
               <div className="flex gap-2">

@@ -62,7 +62,7 @@ const App = () => {
           <Route path="manage-tour" element={<ManageTour />} />
           <Route path="blogpost" element={<Blogpost />} />
           <Route path="add-tour" element={<AddTour />} />
-          <Route path="edit-tour/:tourId" element={<EditTourForm />} />
+          <Route path="edit-tour/:tourId" element={<AddTour />} />
           <Route path="add-post" element={<AddPost />} />
           <Route path="ourteam" element={<OurTeam />} />
           <Route path="add-team-member" element={<AddTeamMemberForm />} />

@@ -7,6 +7,7 @@ import "react-quill/dist/quill.snow.css"; // ✅ ใช้ธีม snow
 import { FiUploadCloud } from "react-icons/fi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import CountryFlag from "../CountryFlag";
 
 function AddTour() {
   const { tourId } = useParams(); // ✅ รับค่า tourId จาก URL
@@ -359,7 +360,7 @@ const handleRemovePdf = () => {
                   <option value="">เลือกประเทศ</option>
                   {countries.map((country) => (
                     <option key={country.id} value={country.id}>
-                      {country.emoji} {country.name} ({country.name_th})
+                      {country.name} ({country.name_th})
                     </option>
                   ))}
                 </select>

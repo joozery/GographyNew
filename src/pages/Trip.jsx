@@ -8,7 +8,7 @@ import bgImage from "../assets/Maskgroup.jpg"; // ✅ Import รูปพื้�
 import { useEffect, useState } from "react";
 import { LuCalendar, LuEarth, LuSparkles } from "react-icons/lu";
 import axios from "axios";
-
+import CountryFlag from "../components/CountryFlag";
 const TripPage = () => {
   const [range, setRange] = useState("");
   const [year, setYear] = useState("");
@@ -116,7 +116,7 @@ const TripPage = () => {
                             <option
                               key={index}
                               value={country.id}
-                            >{`${country.emoji} ${country.name}`}</option>
+                            >{<CountryFlag countryCodes={country.emoji}/> + `${country.name}`}</option>
                           ))}
                       </select>
                     </div>

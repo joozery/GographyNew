@@ -38,11 +38,11 @@ const TripPage = () => {
             `https://servergogo-app-209f1146e735.herokuapp.com/api/countries`
           ),
           axios.post(
-            `https://servergogo-app-209f1146e735.herokuapp.com/api/tours`,
+            `https://servergogo-app-209f1146e735.herokuapp.com/api/tours/search`,
             body
           ),
           axios.post(
-            `https://servergogo-app-209f1146e735.herokuapp.com/api/tours/recommend`,
+            `https://servergogo-app-209f1146e735.herokuapp.com/api/tours/search/recommend`,
             body
           ),
         ]);

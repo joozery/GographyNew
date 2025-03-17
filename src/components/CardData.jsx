@@ -70,7 +70,7 @@ const TourCard = ({ tour, Success }) => {
           วันที่สิ้นสุด: {new Date(tour.end_date).toLocaleDateString()}
         </span>
         <span className="text-gray-700 text-base">
-          สถานที่: {tour.locations.join(", ")}
+          สถานที่: {tour.locations?.join(", ") || "ไม่ระบุ"}
         </span>
       </div>
 

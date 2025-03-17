@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import CountryFlag from "../CountryFlag";
 
 function AddTour() {
+  const navigate = useNavigate();
   const { tourId } = useParams(); // ✅ รับค่า tourId จาก URL
   const [formData, setFormData] = useState({
     tour_name: "",
@@ -78,9 +79,9 @@ function AddTour() {
           if (tourData.image) {
             setPreviewImage(tourData.image);
           }
-          if (tourData.pdf_url){
+          if (tourData.pdf_url) {
             setPreviewPdf(tourData.pdf_url);
-          }  // ✅ โหลด PDF
+          } // ✅ โหลด PDF
         })
         .catch((error) => console.error("Error loading tour:", error))
         .finally(() => setLoading(false));
@@ -125,8 +126,17 @@ function AddTour() {
   // ✅ อัปเดตค่าของวันเดินทาง
   const handleDayChange = (index, field, value) => {
     const updatedDays = [...days];
-    // updatedDays[index][field] = value;
-    updatedDays[index][field] = value ? value.split("T")[0] : ""; // แปลงวันที่
+
+    if (
+      typeof value === "string" &&
+      value.includes("T") &&
+      !isNaN(Date.parse(value))
+    ) {
+      updatedDays[index][field] = value.split("T")[0]; // ตัด "T" ถ้าเป็น datetime
+    } else {
+      updatedDays[index][field] = value; // เก็บค่าเดิม ถ้าไม่ใช่ datetime
+    }
+
     setDays(updatedDays);
   };
 
@@ -152,39 +162,39 @@ function AddTour() {
   };
 
   // ✅ อัปโหลดรูปและ PDF
-      // const handleFileChange = (e, type) => {
-      //   // if (type === "image") setImage(e.target.files[0]);
-      //   // if (type === "pdf_file") setPdfFile(e.target.files[0]);
-      //   const file = e.target.files[0];
-      //   if (type === "image") {
-      //     setImage(file);
-      //     setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview ทันที
-      //   }
-      //   if (type === "pdf_url") {
-      //     setPdfFile(file);
-      //   }
-      // };
-      const handleFileChange = (e, type) => {
-        const file = e.target.files[0];
-        if (!file) return;
-      
-        if (type === "image") {
-          setImage(file);
-          setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview ทันที
-        }
-      
-        if (type === "pdf_url") {
-          setPdfFile(file);
-          setPreviewPdf(URL.createObjectURL(file)); // ✅ อัปเดต Preview PDF ทันที
-        }
-      };
+  // const handleFileChange = (e, type) => {
+  //   // if (type === "image") setImage(e.target.files[0]);
+  //   // if (type === "pdf_file") setPdfFile(e.target.files[0]);
+  //   const file = e.target.files[0];
+  //   if (type === "image") {
+  //     setImage(file);
+  //     setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview ทันที
+  //   }
+  //   if (type === "pdf_url") {
+  //     setPdfFile(file);
+  //   }
+  // };
+  const handleFileChange = (e, type) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (type === "image") {
+      setImage(file);
+      setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview ทันที
+    }
+
+    if (type === "pdf_url") {
+      setPdfFile(file);
+      setPreviewPdf(URL.createObjectURL(file)); // ✅ อัปเดต Preview PDF ทันที
+    }
+  };
 
   // ✅ ลบ PDF
-const handleRemovePdf = () => {
-  setPdfFile(null);
-  setPreviewPdf(null);
-  setFormData({ ...formData, pdf_url: "" }); // ✅ ส่ง "" เพื่อให้ API ลบ PDF
-};
+  const handleRemovePdf = () => {
+    setPdfFile(null);
+    setPreviewPdf(null);
+    setFormData({ ...formData, pdf_url: "" }); // ✅ ส่ง "" เพื่อให้ API ลบ PDF
+  };
 
   const handleFileChangeDay = (dayIndex, files) => {
     const updatedDays = [...days];
@@ -293,6 +303,7 @@ const handleRemovePdf = () => {
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
+        console.log(response);
         setMessage(response.data.message);
         if (response.data.message) {
           // ✅ แสดง SweetAlert2 และกลับไปที่หน้า /admin/manage-tour
@@ -735,7 +746,7 @@ const handleRemovePdf = () => {
           </div>
         </form>
       )}
-      {/* {message && <p>{message}</p>} */}
+      {message && <p>{message}</p>}
     </div>
   );
 }

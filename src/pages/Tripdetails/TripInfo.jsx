@@ -148,9 +148,9 @@ const TripInfo = ({ data }) => {
             <span className="text-[#40B91B] font-semibold">สิ่งที่รวม</span>
           </h3>
           <ul className="mt-2 bg-[#EBF6E840] min-h-[200px] text-base p-4 rounded-lg space-y-3">
-            {DataTour.included.split(",").map((item, index) => (
-              <li key={index} className="flex items-center gap-2">
-                <LuCircleCheck className="text-[#40B91B] text-xl" />
+            {DataTour.included.split(",,").map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <LuCircleCheck className="text-[#40B91B] text-xl min-w-[20px] mt-1" />
                 {item.trim()}
               </li>
             ))}
@@ -166,9 +166,9 @@ const TripInfo = ({ data }) => {
             <span className="text-[#B91B1B] font-semibold">สิ่งที่ไม่รวม</span>
           </h3>
           <ul className="mt-2 bg-[#F6E8E840] min-h-[200px] text-base p-4 rounded-lg space-y-3">
-            {DataTour.not_included.split(",").map((item, index) => (
-              <li key={index} className="flex items-center gap-2">
-                <LuCircleX className="text-[#B91B1B] text-xl" />
+            {DataTour.not_included.split(",,").map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <LuCircleX className="text-[#B91B1B] text-xl min-w-[20px] mt-1" />
                 {item.trim()}
               </li>
             ))}

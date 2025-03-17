@@ -55,7 +55,7 @@ const DayOneItinerary = ({ countDays }) => {
                         // className="grid grid-cols-1 sm:grid-cols-2 gap-4"
                         className="flex flex-col md:flex-row gap-4"
                       >
-                        <div className="bg-[#EBF6E8] text-[#40B91B] flex items-center justify-center min-w-[150px] h-8 rounded-lg text-center">
+                        <div className={`${schedule.time === null ? "" : "bg-[#EBF6E8]" } text-[#40B91B] flex items-center justify-center min-w-[150px] h-8 rounded-lg text-center`}>
                           {schedule.time}
                         </div>
                         <div className="flex">

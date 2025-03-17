@@ -57,8 +57,8 @@ const TripList = ({ trips }) => {
               {/* ✅ รูปภาพ */}
               <div className="relative">
                 <img
-                  src={trip.image}
-                  alt={trip.locations[0]}
+                  src={trip.image || ""}
+                  alt={trip.locations === null ? "" : trip.locations[0]}
                   className="w-full h-48 object-cover"
                 />
                 <span className="absolute top-3 left-3 bg-[#808080d3] opacity-95 text-white px-2 py-1 rounded-lg text-sm">

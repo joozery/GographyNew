@@ -47,22 +47,20 @@ a[href*="facebook-reviews-widget"] {
   color: #888;
 } */
 
-
-
-.iPXdjg{
+.iPXdjg {
   background-color: white !important;
-  border: 1px solid #D4D9E0 !important;
+  border: 1px solid #d4d9e0 !important;
 }
 
-.fRYNlR::after{
+.fRYNlR::after {
   border-radius: 10px !important;
 }
 
-.eWYNAh{
+.eWYNAh {
   margin-bottom: 5px !important;
 }
 
-.es-review-content-text{
+.es-review-content-text {
   font-size: 14px !important;
 }
 
@@ -74,6 +72,15 @@ a[href*="facebook-reviews-widget"] {
   border-radius: 10px !important;
 }
 
-.WidgetBackground__Content-sc-1ho7q3r-2 .ciCnpO a{
+.WidgetBackground__Content-sc-1ho7q3r-2 .ciCnpO a {
   display: none !important;
+}
+
+:where(.css-dev-only-do-not-override-240cud).ant-select-outlined:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  border: 0;
+  background: 0;
+  box-shadow: none !important; /* ลบเงาฟ้าที่เกิดจาก focus */
 }

@@ -7,7 +7,55 @@ import search from "../../assets/icon/search.svg";
 import card1 from "../../assets/Card/card.svg";
 import card2 from "../../assets/Card/card2.svg";
 import card3 from "../../assets/Card/card3.svg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import CountrySelectBegin from "../CouuntryDDL/begin";
+
+const months = [
+  { value: "01", label: "มกราคม" },
+  { value: "02", label: "กุมภาพันธ์" },
+  { value: "03", label: "มีนาคม" },
+  { value: "04", label: "เมษายน" },
+  { value: "05", label: "พฤษภาคม" },
+  { value: "06", label: "มิถุนายน" },
+  { value: "07", label: "กรกฎาคม" },
+  { value: "08", label: "สิงหาคม" },
+  { value: "09", label: "กันยายน" },
+  { value: "10", label: "ตุลาคม" },
+  { value: "11", label: "พฤศจิกายน" },
+  { value: "12", label: "ธันวาคม" },
+];
+
 const BeginTrip = () => {
+  const [country, setCountry] = useState([]);
+  const [Range, setRange] = useState("");
+  const [DDL_Country, setDDL_Country] = useState([]);
+
+  const handleSearch = () => {
+    console.log("country", country.value);
+    console.log("Range", Range);
+    // return
+    const params = new URLSearchParams({ country_send: country.value, month_send: Range }).toString();
+    window.location.href = `/Trips?${params}`;
+  };
+  
+
+  const GetData = async () => {
+    try {
+      const response = await axios.get(
+        "https://servergogo-app-209f1146e735.herokuapp.com/api/countries"
+      );
+      // console.log(response);
+      // return
+      setDDL_Country(response.data);
+    } catch (error) {
+      console.error("Error loading tours:", error);
+    }
+  };
+
+  useEffect(() => {
+    GetData();
+  }, []);
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div
@@ -27,13 +75,12 @@ const BeginTrip = () => {
                     ประเทศ
                     <img src={earth} className="w-4" alt="" />
                   </label>
-                  <div className="relative">
-                    <select className="w-full px-4 py-3 bg-gray-100 min-h-12 rounded-lg appearance-none focus:ring-2 focus:ring-blue-300">
-                      <option value="norway">🇳🇴 นอร์เวย์</option>
-                      <option value="japan">🇯🇵 ญี่ปุ่น</option>
-                      <option value="france">🇫🇷 ฝรั่งเศส</option>
-                      <option value="usa">🇺🇸 สหรัฐอเมริกา</option>
-                    </select>
+                  <div className="relative custom-antd-select">
+                    <CountrySelectBegin
+                      countries={DDL_Country}
+                      selectedCountry={country}
+                      setSelectedCountry={setCountry}
+                    />
                     <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                       <img src={icondown} alt="" />
                     </div>
@@ -46,11 +93,18 @@ const BeginTrip = () => {
                     <img src={calendar} className="w-4" alt="" />
                   </label>
                   <div className="relative">
-                    <select className="w-full px-4 py-3 bg-gray-100 rounded-lg min-h-12 appearance-none focus:ring-2 focus:ring-blue-300">
-                      <option value="january">มกราคม</option>
-                      <option value="february">กุมภาพันธ์</option>
-                      <option value="march">มีนาคม</option>
-                      <option value="april">เมษายน</option>
+                    <select
+                      value={Range}
+                      onChange={(e) => setRange(e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-100 min-h-12 rounded-lg appearance-none focus:ring-2 focus:ring-blue-300"
+                    >
+                      <option value="">ทุกเดือน</option>{" "}
+                      {/* ✅ เพิ่มตัวเลือก "ทุกเดือน" */}
+                      {months.map((month) => (
+                        <option key={month.value} value={month.value}>
+                          {month.label}
+                        </option>
+                      ))}
                     </select>
                     <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                       <img src={icondown} alt="" />
@@ -59,7 +113,9 @@ const BeginTrip = () => {
                 </div>
 
                 <div className="col-span-1 flex justify-end items-end">
-                  <button className="w-full flex items-center justify-center min-h-12 bg-[#3F72B7] text-[#FFFFFF] rounded-lg shadow-md hover:bg-[#305a92] gap-2 transition">
+                  <button 
+                  onClick={handleSearch}
+                  className="w-full flex items-center justify-center min-h-12 bg-[#3F72B7] text-[#FFFFFF] rounded-lg shadow-md hover:bg-[#305a92] gap-2 transition">
                     ค้นหา
                     <img src={search} alt="" />
                   </button>

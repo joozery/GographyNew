@@ -19,7 +19,7 @@ const ReviewFacebook = () => {
       </div>
       <div className="relative w-full max-w-6xl mx-auto">
         <div
-          class="elfsight-app-d63cd569-4cfe-48f0-bbba-280a8b25752b"
+          className="elfsight-app-d63cd569-4cfe-48f0-bbba-280a8b25752b"
           data-elfsight-app-lazy
         ></div>
 

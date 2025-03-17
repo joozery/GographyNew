@@ -10,6 +10,7 @@ import { LuCalendar, LuEarth, LuSparkles } from "react-icons/lu";
 import axios from "axios";
 import CountryFlag from "../components/CountryFlag";
 import CountrySelect from "../components/CouuntryDDL";
+import { useLocation } from "react-router-dom";
 
 const months = [
   { value: "01", label: "มกราคม" },
@@ -30,9 +31,15 @@ const currentYear = new Date().getFullYear() + 543; // แปลงเป็น 
 const years = [currentYear, currentYear - 1, currentYear - 2]; // ✅ เอาปีล่าสุด + ย้อนหลัง 2 ปี
 
 const TripPage = () => {
-  const [range, setRange] = useState("");
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const country_send = params.get("country_send") ? Number(params.get("country_send")) : null;
+
+  const [range, setRange] = useState(params.get("month_send") || "");
   const [year, setYear] = useState("");
-  const [Country, setCountry] = useState("");
+  const [Country, setCountry] = useState({
+    value: country_send || "",
+  });
   const [Data, setData] = useState([]);
   const [DDL_Country, setDDL_Country] = useState([]);
   const [RecommendData, setRecommendData] = useState(null);
@@ -74,6 +81,7 @@ const TripPage = () => {
     }
   };
 
+  // ✅ โหลดค่าจาก params ทันทีที่หน้าโหลด
   useEffect(() => {
     GetData();
   }, []);
@@ -128,19 +136,6 @@ const TripPage = () => {
                         selectedCountry={Country}
                         setSelectedCountry={setCountry}
                       />
-                      {/* <select
-                        value={Country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        className="font-medium w-full mr-2 p-2 focus:border-none focus:outline-none bg-[#F6F6F6] rounded-lg"
-                      >
-                        {DDL_Country &&
-                          DDL_Country.map((country, index) => (
-                            <option
-                              key={index}
-                              value={country.id}
-                            >{`${country.name}`}</option>
-                          ))}
-                      </select> */}
                     </div>
 
                     {/* ช่วงเวลา */}
@@ -185,7 +180,8 @@ const TripPage = () => {
                   {/* ปุ่มค้นหา */}
                   <button
                     className="w-full flex justify-center items-center bg-[#3F72B7] text-white py-2 rounded-md shadow-md hover:bg-[#305a92] transition font-semibold"
-                    onClick={() => GetData(range, year)}
+                    onClick={() => GetData()}
+                    // onClick={handleSearch}
                   >
                     ค้นหา <FaSearch className="ml-2" size={15} />
                   </button>

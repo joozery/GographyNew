@@ -4,21 +4,28 @@ import "swiper/css";
 import "swiper/css/free-mode";
 
 const countries = [
-  { name: "Georgia", flag: "🇬🇪" },
-  { name: "Japan", flag: "🇯🇵" },
-  { name: "Iceland", flag: "🇮🇸" },
-  { name: "Argentina", flag: "🇦🇷" },
-  { name: "New Zealand", flag: "🇳🇿" },
-  { name: "India", flag: "🇮🇳" },
-  { name: "Norway", flag: "🇳🇴" },
-  { name: "France", flag: "🇫🇷" },
+  { name: "Georgia", flag: "ge" },
+  { name: "Japan", flag: "jp" },
+  { name: "Iceland", flag: "is" },
+  { name: "Argentina", flag: "ar" },
+  { name: "New Zealand", flag: "nz" },
+  { name: "India", flag: "in" },
+  { name: "Norway", flag: "no" },
+  { name: "France", flag: "fr" },
+  { name: "Kenya", flag: "ke" },
+  { name: "Tanzania", flag: "tz" },
+  { name: "Bhutan", flag: "bt" },
+  { name: "Romania", flag: "ro" },
+  { name: "Canada", flag: "ca" },
+  { name: "Indonesia", flag: "id" },
+  { name: "Greece", flag: "gr" },
 ];
 
 const CountryCarousel = () => {
   return (
     <div className="relative w-full max-w-5xl mx-auto p-5 lg:p-0">
       <div className="flex relative z-20 flex-col justify-start items-start">
-        <h2 className="text-xl font-bold text-gray-800">13 ประเทศ</h2>
+        <h2 className="text-xl font-bold text-gray-800">{countries.length} ประเทศ</h2>
         <p className="text-gray-500 mb-6">ที่พร้อมพาคุณไปพบกับความสุข</p>
       </div>
       <Swiper
@@ -46,7 +53,8 @@ const CountryCarousel = () => {
             }`}
           >
             <div className="text-center">
-              <div className="text-4xl">{country.flag}</div>
+              {/* <div className="text-4xl">{country.flag}</div> */}
+              <span className={`fi fi-${country.flag}`}></span>
               <p className="mt-2 text-sm text-[#3F72B7]">{country.name}</p>
             </div>
           </SwiperSlide>

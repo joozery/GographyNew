@@ -5,6 +5,7 @@ import { LuArrowRight } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import CountryFlag from "../CountryFlag";
 
 const RecommendedTrip = ({ data }) => {
   if (!data) {
@@ -78,10 +79,10 @@ const RecommendedTrip = ({ data }) => {
           <img
             src={tour[0].image}
             alt="Sweden"
-            className="w-full h-[300px] rounded-lg object-cover"
+            className="w-[400px] h-[300px] rounded-lg object-cover"
           />
           <span className="absolute top-3 left-3 bg-[#808080B2] opacity-95 text-white px-3 py-2 rounded-xl text-sm">
-            Sweden
+            {tour[0].country_name}
           </span>
         </div>
 
@@ -94,7 +95,8 @@ const RecommendedTrip = ({ data }) => {
               <div className="flex items-end justify-between">
                 <div className="flex flex-col text-lg font-bold gap-2">
                   {/* <img src={flahsweden} alt="" className="w-8" /> */}
-                  <span>{tour[0].country_emoji}</span>
+                  {/* <span>{tour[0].country_emoji}</span> */}
+                  <CountryFlag countryCodes={tour[0].country_emoji} />
                   <span className="text-2xl">
                     {tour[0].country_name_th}{" "}
                     <span className="text-[#748193]">•</span> {tour[0].price} ฿

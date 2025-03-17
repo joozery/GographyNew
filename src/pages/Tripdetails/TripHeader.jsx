@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import axios from "axios";
 import { LuArrowLeft } from "react-icons/lu";
+import CountryFlag from "../../components/CountryFlag";
 
 const TripHeader = ({ tourId , HeaderData }) => {
   const scrollRef = useRef(null);
@@ -71,7 +72,8 @@ const TripHeader = ({ tourId , HeaderData }) => {
         <div className="w-full flex justify-between items-end mb-6">
           <div className="flex flex-col justify-start items-start gap-3">
             <div>
-              <span className="text-xl mr-2">{HeaderData.emoji}</span>
+              {/* <span className="text-xl mr-2">{HeaderData.emoji}</span> */}
+              <CountryFlag countryCodes={HeaderData.emoji} />
               <span className="text-gray-500 text-sm">{HeaderData.name_th} / {HeaderData.name}</span>
             </div>
             <div>

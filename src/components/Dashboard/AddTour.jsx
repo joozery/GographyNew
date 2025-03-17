@@ -377,7 +377,9 @@ function AddTour() {
                 </select>
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
-                <label className="block mt-4 font-bold">พื้นที่</label>
+                <label className="block mt-4 font-bold">
+                  พื้นที่ {requirefield}
+                </label>
                 <input
                   value={formData.locations}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
@@ -385,6 +387,7 @@ function AddTour() {
                   name="locations"
                   placeholder="กรอกแบบ thai,canada,china เท่านั้น"
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
@@ -414,15 +417,13 @@ function AddTour() {
                 />
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
-                <label className="block mt-4 font-bold">
-                  ประเภทการท่องเที่ยว
-                </label>
+                <label className="block mt-4 font-bold">จำนวนสมาชิก</label>
                 <input
                   value={formData.travel_type}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
                   type="text"
                   name="travel_type"
-                  placeholder="ประเภทการท่องเที่ยว"
+                  placeholder="จำนวนสมาชิก"
                   onChange={handleChange}
                 />
               </div>
@@ -436,7 +437,13 @@ function AddTour() {
                   type="number"
                   name="price"
                   placeholder="ราคา"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, ""); // ✅ กรองให้มีแค่ตัวเลข
+                    handleChange({ target: { name: "price", value } }); // ✅ ส่งค่าไปอัปเดต formData
+                  }}
+                  onWheel={(e) => e.target.blur()} // ✅ ป้องกัน Scroll เปลี่ยนค่า
+                  step="1" // ✅ ปิดการเพิ่มค่าทศนิยม
+                  min="0" // ✅ ป้องกันค่าติดลบ
                   required
                 />
               </div>

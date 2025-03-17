@@ -102,15 +102,13 @@ const TripInfo = ({ data }) => {
           <p className="text-lg font-semibold mt-1">{DataTour.duration}</p>
         </div>
 
-        {/* ประเภทการท่องเที่ยว */}
+        {/* จำนวนสมาชิก */}
         <div className="flex flex-col items-start gap-2 border border-gray-200 rounded-lg p-4">
           <div className="flex items-center gap-2">
             <div className="bg-[#F6F6F6] p-2 rounded-lg">
               <LuCircleDashed className="text-xl" />
             </div>
-            <span className="font-semibold text-[#748193]">
-              ประเภทการท่องเที่ยว
-            </span>
+            <span className="font-semibold text-[#748193]">จำนวนสมาชิก</span>
           </div>
           <p className="text-lg font-semibold mt-1">{DataTour.travel_type}</p>
         </div>

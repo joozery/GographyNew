@@ -9,6 +9,26 @@ import { useEffect, useState } from "react";
 import { LuCalendar, LuEarth, LuSparkles } from "react-icons/lu";
 import axios from "axios";
 import CountryFlag from "../components/CountryFlag";
+import CountrySelect from "../components/CouuntryDDL";
+
+const months = [
+  { value: "01", label: "มกราคม" },
+  { value: "02", label: "กุมภาพันธ์" },
+  { value: "03", label: "มีนาคม" },
+  { value: "04", label: "เมษายน" },
+  { value: "05", label: "พฤษภาคม" },
+  { value: "06", label: "มิถุนายน" },
+  { value: "07", label: "กรกฎาคม" },
+  { value: "08", label: "สิงหาคม" },
+  { value: "09", label: "กันยายน" },
+  { value: "10", label: "ตุลาคม" },
+  { value: "11", label: "พฤศจิกายน" },
+  { value: "12", label: "ธันวาคม" },
+];
+
+const currentYear = new Date().getFullYear() + 543; // แปลงเป็น พ.ศ.
+const years = [currentYear, currentYear - 1, currentYear - 2]; // ✅ เอาปีล่าสุด + ย้อนหลัง 2 ปี
+
 const TripPage = () => {
   const [range, setRange] = useState("");
   const [year, setYear] = useState("");
@@ -16,19 +36,16 @@ const TripPage = () => {
   const [Data, setData] = useState([]);
   const [DDL_Country, setDDL_Country] = useState([]);
   const [RecommendData, setRecommendData] = useState(null);
-  // const [Search, setSearch] = useState({
-  //   country: "",
-  //   startYear: "",
-  //   endYear: "",
-  // });
   const [loading, setLoading] = useState(false);
 
   const GetData = async () => {
     const body = {
-      country_id: Country,
-      start_year: year,
-      end_year: year,
+      country_id: Country.value,
+      month: range,
+      year: year ? (parseInt(year) - 543).toString() : "", // ✅ แปลง พ.ศ. → ค.ศ.
     };
+    console.log(body);
+    // return;
 
     setLoading(true);
     try {
@@ -106,7 +123,12 @@ const TripPage = () => {
                           <LuEarth />
                         </div>
                       </div>
-                      <select
+                      <CountrySelect
+                        countries={DDL_Country}
+                        selectedCountry={Country}
+                        setSelectedCountry={setCountry}
+                      />
+                      {/* <select
                         value={Country}
                         onChange={(e) => setCountry(e.target.value)}
                         className="font-medium w-full mr-2 p-2 focus:border-none focus:outline-none bg-[#F6F6F6] rounded-lg"
@@ -116,9 +138,9 @@ const TripPage = () => {
                             <option
                               key={index}
                               value={country.id}
-                            >{<CountryFlag countryCodes={country.emoji}/> + `${country.name}`}</option>
+                            >{`${country.name}`}</option>
                           ))}
-                      </select>
+                      </select> */}
                     </div>
 
                     {/* ช่วงเวลา */}
@@ -135,22 +157,26 @@ const TripPage = () => {
                           onChange={(e) => setRange(e.target.value)}
                           className="font-medium w-full p-2 focus:border-none focus:outline-none bg-transparent"
                         >
-                          <option value="ทั้งหมด">ทั้งหมด</option>
-                          <option value="2568">2568</option>
-                          <option value="2567">2567</option>
-                          <option value="2566">2566</option>
-                          <option value="2565">2565</option>
+                          <option value="">ทุกเดือน</option>{" "}
+                          {/* ✅ เพิ่มตัวเลือก "ทุกเดือน" */}
+                          {months.map((month) => (
+                            <option key={month.value} value={month.value}>
+                              {month.label}
+                            </option>
+                          ))}
                         </select>
                         <select
                           value={year}
                           onChange={(e) => setYear(e.target.value)}
                           className="font-medium w-full border-s border-gray-300 pl-2 mr-2 p-2 focus:outline-none bg-transparent"
                         >
-                          {/* <option value="ทั้งหมด">ทั้งหมด</option> */}
-                          <option value="2568">2568</option>
-                          <option value="2567">2567</option>
-                          <option value="2566">2566</option>
-                          <option value="2565">2565</option>
+                          <option value="">ทุกปี</option>{" "}
+                          {/* ✅ เพิ่มตัวเลือก "ทุกปี" */}
+                          {years.map((y) => (
+                            <option key={y} value={y}>
+                              {y}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -200,9 +226,21 @@ const TripPage = () => {
               </div>
             </section>
             {/* ✅ แสดง Section ทริปแนะนำ */}
-            <RecommendedTrip data={RecommendData} />{" "}
+            {RecommendData && RecommendData.length > 0 ? (
+              <RecommendedTrip data={RecommendData} />
+            ) : (
+              <div className="w-full text-center text-gray-500 text-lg font-semibold py-10">
+                ไม่มีข้อมูลทริปแนะนำ
+              </div>
+            )}
             {/* ✅ แสดง Section ทริปแนะนำ */}
-            <TripList trips={Data} /> {/* ✅ แสดง Section รายการทริป */}
+            {Data && Data.length > 0 ? (
+              <TripList trips={Data} />
+            ) : (
+              <div className="w-full text-center text-gray-500 text-lg font-semibold py-10">
+                ไม่มีข้อมูลทริปที่ค้นหา
+              </div>
+            )}
           </>
         )}
       </div>

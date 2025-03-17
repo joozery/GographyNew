@@ -82,15 +82,15 @@ const TripList = ({ trips }) => {
                 <div className="flex flex-col gap-0">
                   <div className="flex justify-between items-center text-xl font-semibold">
                     <span>{trip.country_name_th}</span>
-                    <span>{trip.price}</span>
+                    <span>{trip.price} ฿</span>
                   </div>
                   <div className="flex justify-between items-center text-base text-[#748193] font-medium">
-                    <span>{trip.location ? trip.locations[0] : "ไม่มีข้อมูลสถานที่"}</span>
+                    <span>{trip.locations ? trip.locations[0] : "ไม่มีข้อมูลสถานที่"}</span>
                     {/* <span>{trip.price}</span> */}
                   </div>
                 </div>
 
-                <div className="flex justify-start items-center gap-2 text-base text-[#748193] font-medium">
+                <div className="flex justify-start items-center gap-2 text-xs md:text-sm lg:text-base text-[#748193] font-medium">
                   <span>{formatDateToThai(trip.start_date)}</span>
                   <span>
                     <LuArrowRight />

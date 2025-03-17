@@ -377,9 +377,7 @@ function AddTour() {
                 </select>
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
-                <label className="block mt-4 font-bold">
-                  พื้นที่ {requirefield}
-                </label>
+                <label className="block mt-4 font-bold">พื้นที่ {requirefield}</label>
                 <input
                   value={formData.locations}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
@@ -417,7 +415,9 @@ function AddTour() {
                 />
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
-                <label className="block mt-4 font-bold">จำนวนสมาชิก</label>
+                <label className="block mt-4 font-bold">
+                จำนวนสมาชิก
+                </label>
                 <input
                   value={formData.travel_type}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
@@ -429,21 +429,15 @@ function AddTour() {
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
                 <label className="block mt-4 font-bold">
-                  ราคา {requirefield}
+                  ราคา ฿ {requirefield} (ไม่ต้องกรอกสกุลเงิน)
                 </label>
                 <input
                   value={formData.price}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
-                  type="number"
-                  name="price"
+                  type="text"
+                  name="price"  
                   placeholder="ราคา"
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, ""); // ✅ กรองให้มีแค่ตัวเลข
-                    handleChange({ target: { name: "price", value } }); // ✅ ส่งค่าไปอัปเดต formData
-                  }}
-                  onWheel={(e) => e.target.blur()} // ✅ ป้องกัน Scroll เปลี่ยนค่า
-                  step="1" // ✅ ปิดการเพิ่มค่าทศนิยม
-                  min="0" // ✅ ป้องกันค่าติดลบ
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -467,7 +461,7 @@ function AddTour() {
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
                   type="text"
                   name="included"
-                  placeholder="กรอกแบบ ประกัน,ช่างภาพ,รวมค่าที่พัก เท่านั้น"
+                  placeholder="กรอกแบบ ประกัน,,ช่างภาพ,,รวมค่าที่พัก เท่านั้น"
                   onChange={handleChange}
                 />
               </div>
@@ -478,7 +472,7 @@ function AddTour() {
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
                   type="text"
                   name="not_included"
-                  placeholder="กรอกแบบ กิจกรรม,ค่าอาหาร,ตั๋วเครื่องบิน เท่านั้น"
+                  placeholder="กรอกแบบ กิจกรรม,,ค่าอาหาร,,ตั๋วเครื่องบิน เท่านั้น"
                   onChange={handleChange}
                 />
               </div>

@@ -9,58 +9,13 @@ import card2 from "../../assets/Card/card2.svg";
 import card3 from "../../assets/Card/card3.svg";
 const BeginTrip = () => {
   return (
-    <div className="w-full max-w-6xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto">
       <div
         className="relative bg-cover object-cover bg-center bg-no-repeat w-full h-[600px] rounded-3xl"
         style={{ backgroundImage: `url(${bgtrip})` }}
       >
         <div className="flex justify-center items-center top-50 left-50 w-full h-full">
-          <div className="bg-transparent backdrop-blur-md rounded-none md:rounded-3xl p-5">
-            {/* <div className="bg-white flex flex-col justify-center items-center rounded-2xl p-5">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-800 text-start">
-                  เริ่มต้นการท่องเที่ยว
-                </h2>
-                <div className="flex flex-col md:flex-row justify-center items-center space-x-4">
-                  <div className="relative flex flex-col justify-start items-start">
-                    <div className="flex justify-start items-center">
-                      <span className="text-[#748193]">ประเทศ</span>
-                      <img src={earth} alt="" className="w-5" />
-                    </div>
-                    <select
-                      name="country"
-                      className="bg-[#F6F6F6] rounded-md py-2 px-3"
-                      id=""
-                    >
-                      <option value="thailand">🇹🇭 ไทย</option>
-                      <option value="japan">ญี่ปุ่น</option>
-                      <option value="indonesia">อินโดนีเซีย</option>
-                      <option value="singapore">สิงคโปร์</option>
-                      <option value="malaysia">มาเลเซีย</option>
-                      <option value="laos">ลาว</option>
-                    </select>
-                  </div>
-                  <div className="flex flex-col justify-start items-start">
-                    <div className="flex justify-start items-center">
-                      <span className="text-[#748193]">ประเทศ</span>
-                      <img src={earth} alt="" className="w-5" />
-                    </div>
-                    <select
-                      name="country"
-                      className="bg-[#F6F6F6] rounded-md py-2 px-3"
-                      id=""
-                    >
-                      <option value="thailand">🇹🇭 ไทย</option>
-                      <option value="japan">ญี่ปุ่น</option>
-                      <option value="indonesia">อินโดนีเซีย</option>
-                      <option value="singapore">สิงคโปร์</option>
-                      <option value="malaysia">มาเลเซีย</option>
-                      <option value="laos">ลาว</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div> */}
+          <div className="bg-transparent backdrop-blur-md rounded-none md:rounded-3xl p-0 md:p-5">
             <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-2xl">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 เริ่มต้นการท่องเที่ยว

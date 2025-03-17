@@ -3,7 +3,7 @@ import tripImage1 from "../../assets/gallery/g1.png"; // ✅ ตรวจสอ�
 import flahsweden from "../../assets/flag/sweden-trip.svg";
 import { LuArrowRight } from "react-icons/lu";
 import { useEffect, useState } from "react";
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const RecommendedTrip = ({ data }) => {
@@ -17,21 +17,22 @@ const RecommendedTrip = ({ data }) => {
   // },[])
   function calculateDaysUntil(targetDate) {
     // แปลง targetDate เป็น Date object ถ้าหากเป็น string
-    const target = typeof targetDate === 'string' ? new Date(targetDate) : targetDate;
-  
+    const target =
+      typeof targetDate === "string" ? new Date(targetDate) : targetDate;
+
     // ตรวจสอบว่า target เป็น Date object ที่ถูกต้องหรือไม่
     if (!(target instanceof Date) || isNaN(target)) {
-      return 'Invalid date';
+      return "Invalid date";
     }
-  
+
     const now = new Date();
     const diffTime = target - now;
-  
+
     // ตรวจสอบว่า targetDate เป็นวันที่ในอดีตหรือไม่
     if (diffTime < 0) {
-      return 'The date has already passed.';
+      return "The date has already passed.";
     }
-  
+
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   }
@@ -95,13 +96,18 @@ const RecommendedTrip = ({ data }) => {
                   {/* <img src={flahsweden} alt="" className="w-8" /> */}
                   <span>{tour[0].country_emoji}</span>
                   <span className="text-2xl">
-                   {tour[0].country_name_th} <span className="text-[#748193]">•</span> {tour[0].price} ฿
+                    {tour[0].country_name_th}{" "}
+                    <span className="text-[#748193]">•</span> {tour[0].price} ฿
                   </span>
                 </div>
               </div>
 
               {/* 📍 สถานที่ */}
-              <p className="text-gray-500 text-lg font-bold">{tour[0].locations[0]}</p>
+              <p className="text-gray-500 text-lg font-bold">
+                {tour && tour[0] && tour[0].locations && tour[0].locations[0]
+                  ? tour[0].locations[0]
+                  : "ไม่มีข้อมูลสถานที่"}
+              </p>
 
               {/* 📅 วันที่เดินทาง */}
               <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -115,19 +121,27 @@ const RecommendedTrip = ({ data }) => {
                   เดินทางในอีก
                 </span>
                 <span className="text-[#3F72B7] bg-[#ECF1F8] px-2 py-1 rounded-md">
-                {calculateDaysUntil(tour[0].start_date)} วัน
+                  {calculateDaysUntil(tour[0].start_date)} วัน
                 </span>
               </p>
 
               {/* 📖 คำอธิบาย */}
               <div className="text-md text-gray-500 leading-relaxed line-clamp-3">
-              {tour[0].highlight ? <div dangerouslySetInnerHTML={{ __html: tour[0].highlight }}></div> : ""}
+                {tour[0].highlight ? (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: tour[0].highlight }}
+                  ></div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
           <div className="py-4">
-            <button className="text-[#748193] min-w-24 font-normal hover:underline flex items-center"
-            onClick={() => navigate(`/Trips/Details/${tour[0].id}`)}>
+            <button
+              className="text-[#748193] min-w-24 font-normal hover:underline flex items-center"
+              onClick={() => navigate(`/Trips/Details/${tour[0].id}`)}
+            >
               ดูข้อมูล <FaArrowRight className="ml-1" />
             </button>
           </div>

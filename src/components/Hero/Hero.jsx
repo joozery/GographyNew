@@ -10,7 +10,7 @@ const Hero = () => {
       style={{ backgroundImage: `url(${herobg})` }}
     >
       {/* คอนเทนต์หลัก */}
-      <div className="relative container mx-auto px-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="relative container mx-auto px-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-72 md:mt-0">
         {/* ข้อความฝั่งซ้าย */}
         <div className="space-y-5 text-left">
           <h1 className="text-4xl md:text-5xl min-h-[110px] font-extrabold bg-gradient-to-r from-[#18283E] to-[#3F72B7] bg-clip-text text-transparent font-bai leading-tight">
@@ -25,7 +25,9 @@ const Hero = () => {
             ผ่านกล้องและภาพถ่าย
           </p>
 
-          <button className="mt-4 px-6 py-3 flex items-center gap-2 bg-[#3F72B7] text-white rounded-lg shadow-md hover:bg-[#305a92] transition">
+          <button 
+          onClick={() => window.location.href = "/Trips"}
+          className="mt-4 px-6 py-3 flex items-center gap-2 bg-[#3F72B7] text-white rounded-lg shadow-md hover:bg-[#305a92] transition">
             วางแผนท่องเที่ยว<LuChevronRight className="text-xl" />
           </button>
         </div>

@@ -15,7 +15,7 @@ const BeginTrip = () => {
         style={{ backgroundImage: `url(${bgtrip})` }}
       >
         <div className="flex justify-center items-center top-50 left-50 w-full h-full">
-          <div className="bg-transparent backdrop-blur-md rounded-3xl p-5">
+          <div className="bg-transparent backdrop-blur-md rounded-none md:rounded-3xl p-5">
             {/* <div className="bg-white flex flex-col justify-center items-center rounded-2xl p-5">
               <div>
                 <h2 className="text-2xl font-bold text-gray-800 text-start">
@@ -66,7 +66,7 @@ const BeginTrip = () => {
                 เริ่มต้นการท่องเที่ยว
               </h2>
 
-              <div className="grid grid-cols-3 gap-4 items-end">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                 <div className="col-span-1">
                   <label className="text-gray-500 text-base flex items-center gap-1 mb-2">
                     ประเทศ

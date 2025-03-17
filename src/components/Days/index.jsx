@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { LuCalendarX, LuDot, LuMapPin } from "react-icons/lu";
@@ -10,10 +10,14 @@ const DayOneItinerary = ({ countDays }) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    console.log(countDays);
+  }, [countDays]);
+
   return (
     <div className="">
       {countDays
-        .filter((day) => day.location.trim() !== "") // ✅ กรอง location ที่เป็นค่าว่างออก
+        // .filter((day) => day.location.trim() !== "") // ✅ กรอง location ที่เป็นค่าว่างออก
         .map((day, index) => (
           <div key={day.id} className="my-5">
             {/* ✅ Header ที่คลิกได้ */}
@@ -55,7 +59,7 @@ const DayOneItinerary = ({ countDays }) => {
                         // className="grid grid-cols-1 sm:grid-cols-2 gap-4"
                         className="flex flex-col md:flex-row gap-4"
                       >
-                        <div className={`${schedule.time === null ? "" : "bg-[#EBF6E8]" } text-[#40B91B] flex items-center justify-center min-w-[150px] h-8 rounded-lg text-center`}>
+                        <div className={`${schedule.time === null || schedule.time === "" ? "" : "bg-[#EBF6E8]" } text-[#40B91B] flex items-center justify-center min-w-[150px] h-8 rounded-lg text-center`}>
                           {schedule.time}
                         </div>
                         <div className="flex">

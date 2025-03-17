@@ -58,7 +58,7 @@ const TripList = ({ trips }) => {
               <div className="relative">
                 <img
                   src={trip.image || ""}
-                  alt={trip.locations === null ? "" : trip.locations[0]}
+                  alt={trip.country_name || ""}
                   className="w-full h-48 object-cover"
                 />
                 <span className="absolute top-3 left-3 bg-[#808080d3] opacity-95 text-white px-2 py-1 rounded-lg text-sm">
@@ -85,7 +85,7 @@ const TripList = ({ trips }) => {
                     <span>{trip.price}</span>
                   </div>
                   <div className="flex justify-between items-center text-base text-[#748193] font-medium">
-                    <span>{trip.locations[0]}</span>
+                    <span>{trip.location ? trip.locations[0] : "ไม่มีข้อมูลสถานที่"}</span>
                     {/* <span>{trip.price}</span> */}
                   </div>
                 </div>

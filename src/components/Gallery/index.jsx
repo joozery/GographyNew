@@ -58,11 +58,17 @@ const ImageGallery = () => {
           {/* Swiper Carousel Row 1 */}
           <Swiper
             modules={[Autoplay, FreeMode]}
-            slidesPerView={6}
+            // slidesPerView={6}
             spaceBetween={5}
             loop={true}
             autoplay={{ delay: 5000, disableOnInteraction: true }}
             freeMode={true}
+            breakpoints={{
+              320: { slidesPerView: 2 },  // มือถือเล็ก
+              480: { slidesPerView: 3 },  // มือถือใหญ่
+              768: { slidesPerView: 4 },  // แท็บเล็ต
+              1024: { slidesPerView: 6 }, // หน้าจอปกติ
+            }}
             className="w-full"
           >
             {images
@@ -83,11 +89,17 @@ const ImageGallery = () => {
           {/* Swiper Carousel Row 2 with Offset */}
           <Swiper
             modules={[Autoplay, FreeMode]}
-            slidesPerView={6}
+            // slidesPerView={6}
             spaceBetween={5}
             loop={true}
             autoplay={{ delay: 5000, disableOnInteraction: true }}
             freeMode={true}
+            breakpoints={{
+              320: { slidesPerView: 2 },  // มือถือเล็ก
+              480: { slidesPerView: 3 },  // มือถือใหญ่
+              768: { slidesPerView: 4 },  // แท็บเล็ต
+              1024: { slidesPerView: 6 }, // หน้าจอปกติ
+            }}
             className="w-full pl-10"
           >
             {images.slice(Math.ceil(images.length / 2)).map((image, index) => (
@@ -116,7 +128,7 @@ const ImageGallery = () => {
       {/* View More Button */}
       <div className="flex justify-center items-center mt-6 text-center">
         <button
-          onClick={() => navigate("/Gallery")}
+          onClick={() => window.location.href = "/Gallery"}
           className="flex items-center justify-center gap-2 border rounded-full shadow-md px-4 py-2 text-[#3F72B7] bg-[#ECF1F8] hover:scale-105 border-[#3F72B7] transition"
         >
           <span>ดูรูปภาพเพิ่มเติม</span>

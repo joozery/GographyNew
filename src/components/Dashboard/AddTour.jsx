@@ -691,6 +691,7 @@ function AddTour() {
                       }
                     />
                     <button
+                      type="button"
                       className="bg-red-500 hover:bg-red-600 rounded-lg text-white p-3 shadow-md"
                       onClick={() => removeSchedule(index, sIndex)}
                     >

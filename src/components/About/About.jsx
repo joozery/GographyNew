@@ -11,7 +11,7 @@ const About = () => {
       style={{ backgroundImage: `url(${bg2})` }}
     >
       {/* คอนเทนต์หลัก */}
-      <div className="container mx-auto px-6 md:px-12 space-y-48">
+      <div className="container mx-auto px-6 md:px-12 space-y-12 md:space-y-48 mt-48 md:mt-0">
         <div>
           {/* หัวข้อ */}
           <h2 className="text-3xl md:text-2xl font-semibold text-[#18283E] font-bai">
@@ -29,7 +29,7 @@ const About = () => {
         </div>
 
         {/* การ์ดสถิติ */}
-        <div className="bg-transparent backdrop-blur-[50px] shadow-sm rounded-3xl mt-10 max-w-3xl mx-auto px-8 py-10">
+        <div className="bg-transparent backdrop-blur-[50px] shadow-sm rounded-3xl mt-0 md:mt-10 max-w-3xl mx-auto px-8 py-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-2">
             {/* การ์ด 1 */}
             <div className="flex flex-col justify-center items-center space-y-2">

@@ -119,7 +119,7 @@ const RecommendedTrip = ({ data }) => {
               </div>
 
               <p>
-                <span className="text-[#545556] cursor-pointer hover:underline mr-2">
+                <span className="text-[#545556] mr-2">
                   เดินทางในอีก
                 </span>
                 <span className="text-[#3F72B7] bg-[#ECF1F8] px-2 py-1 rounded-md">

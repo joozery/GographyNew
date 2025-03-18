@@ -50,16 +50,24 @@ const DayOneItinerary = ({ countDays }) => {
               className="overflow-hidden"
             >
               <div className="border border-gray-200 rounded-b-lg border-t-0">
-                <div className="p-6">
+                <div className="">
                   {/* ✅ ตารางเวลา */}
-                  <div className="mt-4 space-y-4">
-                    {day.time_schedule.map((schedule) => (
+                  <div className="pt-2">
+                    {day.time_schedule.map((schedule, index) => (
                       <div
-                        key={schedule.id}
+                        key={index}
                         // className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                        className="flex flex-col md:flex-row gap-4"
+                        className={`flex flex-col md:flex-row gap-4 px-4 py-2 my-3 ${
+                          index === day.time_schedule.length - 1 ? "" : "border-b"
+                        }`}
                       >
-                        <div className={`${schedule.time === null || schedule.time === "" ? "" : "bg-[#EBF6E8]" } text-[#40B91B] flex items-center justify-center min-w-[150px] h-8 rounded-lg text-center`}>
+                        <div
+                          className={`${
+                            schedule.time === null || schedule.time === ""
+                              ? ""
+                              : "bg-[#EBF6E8]"
+                          } text-[#40B91B] flex items-center justify-center min-w-[150px] h-8 rounded-lg text-center`}
+                        >
                           {schedule.time}
                         </div>
                         <div className="flex">
@@ -69,18 +77,22 @@ const DayOneItinerary = ({ countDays }) => {
                         </div>
                       </div>
                     ))}
-                    <div className="flex">
-                      {day.description ? (
-                        <div
-                          className="text-sm font-light"
-                          dangerouslySetInnerHTML={{
-                            __html: day.description,
-                          }}
-                        ></div>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    {day.description === "" ? (
+                      <></>
+                    ) : (
+                      <div className="flex">
+                        {day.description ? (
+                          <div
+                            className="text-sm font-light"
+                            dangerouslySetInnerHTML={{
+                              __html: day.description,
+                            }}
+                          ></div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* ✅ รูปภาพ (ถ้ามี) */}

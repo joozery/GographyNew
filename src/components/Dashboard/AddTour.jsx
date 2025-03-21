@@ -245,6 +245,7 @@ function AddTour() {
     setPreviewPdf((prev) => prev.filter((_, i) => i !== indexToRemove));
   };
 
+
   const handleFileChangeDay = (dayIndex, files) => {
     const updatedDays = [...days];
     const currentImages = updatedDays[dayIndex].images || [];

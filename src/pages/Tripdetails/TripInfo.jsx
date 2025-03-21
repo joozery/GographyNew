@@ -293,19 +293,22 @@ const TripInfo = ({ data }) => {
         </div>
         {/* ปุ่มดาวน์โหลด PDF */}
         <div className="w-full mt-6 text-center">
-          {DataTour.pdf_url ? (
-            <a
-              href={DataTour.pdf_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-[#3F72B7] hover:bg-[#285695] text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 text-lg transition"
-            >
-              {/* <FaDownload /> */}
-              ดาวน์โหลด PDF
-            </a>
+          {DataTour.pdf_url && DataTour.pdf_url.length > 0 ? (
+            DataTour.pdf_url.map((url, index) => (
+              <a
+                key={index}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#3F72B7] hover:bg-[#285695] text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 text-lg transition mb-2"
+              >
+                {/* <FaDownload /> */}
+                ดาวน์โหลด PDF {index + 1}
+              </a>
+            ))
           ) : (
             <button
-              disabled //ปิดปุ่ม
+              disabled
               className="w-full bg-gray-300 text-gray-500 py-3 px-6 rounded-lg flex items-center justify-center gap-2 text-lg"
             >
               ดาวน์โหลด PDF

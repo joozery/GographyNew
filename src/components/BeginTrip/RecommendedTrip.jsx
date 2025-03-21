@@ -31,7 +31,7 @@ const RecommendedTrip = ({ data }) => {
 
     // ตรวจสอบว่า targetDate เป็นวันที่ในอดีตหรือไม่
     if (diffTime < 0) {
-      return "The date has already passed.";
+      return "0";
     }
 
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));

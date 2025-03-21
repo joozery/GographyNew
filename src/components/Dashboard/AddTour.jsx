@@ -33,14 +33,17 @@ function AddTour() {
   const [days, setDays] = useState([]);
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const [pdfFile, setPdfFile] = useState(null);
-  const [previewPdf, setPreviewPdf] = useState(null);
+  const [pdfFile, setPdfFile] = useState([]);
+  const [previewPdf, setPreviewPdf] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false); // ✅ ตรวจสอบสถานะการโหลดข้อมูล
   const [saving, setSaving] = useState(false); // ✅ ตรวจสอบสถานะการบันทึก
 
   const requirefield = <span className="text-red-700">*</span>;
 
+  useEffect(() => {
+    console.log(previewPdf);
+  }, [previewPdf]);
   // ✅ โหลดประเทศจาก API
   useEffect(() => {
     axios
@@ -161,68 +164,69 @@ function AddTour() {
     setDays(updatedDays);
   };
 
-  // const handleFileChange = (e, type) => {
-  //   const file = e.target.files[0];
-  //   if (!file) return;
-
-  //   if (type === "image") {
-  //     setImage(file);
-  //     setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview ทันที
-  //   }
-
-  //   if (type === "pdf_url") {
-  //     setPdfFile(file);
-  //     setPreviewPdf(URL.createObjectURL(file)); // ✅ อัปเดต Preview PDF ทันที
-  //   }
-  // };
-
-  const handleFileChange = (e, type) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    if (type === "image") {
-      const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
-      if (!allowedTypes.includes(file.type)) {
-        alert("กรุณาเลือกไฟล์ที่เป็น .png, .jpg หรือ .jpeg เท่านั้น");
-        return;
+  const handlePdfChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+  
+    const newFiles = files.filter((file) => file.type === "application/pdf");
+  
+    setPdfFile((prev) => {
+      // ✅ ห้ามซ้ำ: ใช้ file.name + file.lastModified เช็ก
+      const uniqueNewFiles = newFiles.filter(
+        (newFile) =>
+          !prev.some(
+            (existing) =>
+              existing.name === newFile.name &&
+              existing.lastModified === newFile.lastModified
+          )
+      );
+  
+      // ✅ ถ้าไม่มีไฟล์ใหม่ให้ return prev
+      if (uniqueNewFiles.length === 0) return prev;
+  
+      const combined = [...prev, ...uniqueNewFiles];
+  
+      if (combined.length > 3) {
+        alert("สามารถอัปโหลดไฟล์ PDF ได้สูงสุด 3 ไฟล์");
+        e.target.value = null; // รีเซ็ตค่า input ถ้ามีการเลือกเกิน
+        return prev;
       }
-
-      setImage(file);
-      setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview
-    }
-
-    if (type === "pdf_url") {
-      if (file.type !== "application/pdf") {
-        alert("กรุณาเลือกไฟล์ PDF เท่านั้น");
-        return;
-      }
-
-      setPdfFile(file);
-      setPreviewPdf(URL.createObjectURL(file)); // ✅ แสดง Preview PDF
-    }
+  
+      return combined;
+    });
+  
+    e.target.value = null; // รีเซ็ต input หลังจากอัปโหลด
   };
+  
+  
+  useEffect(() => {
+    // เมื่อ `pdfFile` เปลี่ยนแปลง จะอัปเดต `previewPdf`
+    const newPreviewUrls = pdfFile.map((file) => URL.createObjectURL(file));
+    setPreviewPdf(newPreviewUrls);
+  }, [pdfFile]); // รันเมื่อ `pdfFile` เปลี่ยนแปลง
+  
+
 
   const removeSingleImage = (dayIndex, imgIndex) => {
     setDays((prevDays) => {
       const updated = [...prevDays];
-  
+
       const currentImages = [...(updated[dayIndex].images || [])]; // ✅ clone รูป
       const filtered = currentImages.filter((_, i) => i !== imgIndex); // ✅ ไม่ใช้ splice
-  
+
       updated[dayIndex] = {
         ...updated[dayIndex], // ✅ เผื่อมี field อื่นด้วย
         images: filtered,
       };
-  
+
       return updated;
     });
   };
 
   // ✅ ลบ PDF
-  const handleRemovePdf = () => {
-    setPdfFile(null);
-    setPreviewPdf(null);
-    setFormData({ ...formData, pdf_url: "" }); // ✅ ส่ง "" เพื่อให้ API ลบ PDF
+  const handleRemovePdf = (indexToRemove) => {
+    setPdfFile((prev) => prev.filter((_, i) => i !== indexToRemove));
+    setPreviewPdf((prev) => prev.filter((_, i) => i !== indexToRemove));
   };
 
   const handleFileChangeDay = (dayIndex, files) => {
@@ -277,11 +281,14 @@ function AddTour() {
       formDataToSend.append(key, formData[key])
     );
     if (image) formDataToSend.append("image", image);
-    if (pdfFile) {
-      formDataToSend.append("pdf_url", pdfFile);
-    } else {
-      formDataToSend.append("pdf_url", ""); // ✅ ลบ PDF → ส่งค่าว่าง
-    }
+    // if (pdfFile) {
+    //   formDataToSend.append("pdf_url", pdfFile);
+    // } else {
+    //   formDataToSend.append("pdf_url", ""); // ✅ ลบ PDF → ส่งค่าว่าง
+    // }
+    pdfFile.forEach((file) => {
+      formDataToSend.append("pdf_url", file); // ใช้ชื่อซ้ำได้
+    });
 
     // ✅ เพิ่มข้อมูลวันเดินทาง พร้อมส่งรูปภาพไปยัง `images`
     formDataToSend.append(
@@ -546,8 +553,9 @@ function AddTour() {
                   className="hidden"
                   type="file"
                   name="pdf_url"
+                  multiple
                   id="fileUploadPDF"
-                  onChange={(e) => handleFileChange(e, "pdf_url")}
+                  onChange={handlePdfChange}
                   accept="application/pdf"
                 />
                 <label
@@ -556,7 +564,7 @@ function AddTour() {
                 >
                   <FiUploadCloud size={20} /> อัพโหลด PDF
                 </label>
-                {previewPdf && (
+                {/* {previewPdf && (
                   <div className="flex items-center gap-3 mt-2">
                     <a
                       href={previewPdf}
@@ -573,6 +581,32 @@ function AddTour() {
                     >
                       <FaTrash size={16} />
                     </button>
+                  </div>
+                )} */}
+                {previewPdf?.length > 0 && (
+                  <div className="flex flex-col gap-2 mt-2">
+                    {previewPdf.map((url, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-3 bg-gray-100 px-3 py-2 rounded shadow-sm"
+                      >
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline flex-1"
+                        >
+                          PDF {index + 1}
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => handleRemovePdf(index)}
+                          className="text-red-500 hover:text-red-600"
+                        >
+                          <FaTrash size={16} />
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>

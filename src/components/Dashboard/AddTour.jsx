@@ -126,6 +126,22 @@ function AddTour() {
     setDays(updatedDays.map((day, i) => ({ ...day, day_number: i + 1 }))); // รีเซ็ต day_number
   };
 
+  const handleFileChange = (e, type) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (type === "image") {
+      const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+      if (!allowedTypes.includes(file.type)) {
+        alert("กรุณาเลือกไฟล์ที่เป็น .png, .jpg หรือ .jpeg เท่านั้น");
+        return;
+      }
+
+      setImage(file);
+      setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview
+    }
+  }
+
   // ✅ อัปเดตค่าของวันเดินทาง
   const handleDayChange = (index, field, value) => {
     const updatedDays = [...days];

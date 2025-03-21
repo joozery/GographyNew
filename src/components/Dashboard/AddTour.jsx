@@ -161,32 +161,61 @@ function AddTour() {
     setDays(updatedDays);
   };
 
-  // ✅ อัปโหลดรูปและ PDF
   // const handleFileChange = (e, type) => {
-  //   // if (type === "image") setImage(e.target.files[0]);
-  //   // if (type === "pdf_file") setPdfFile(e.target.files[0]);
   //   const file = e.target.files[0];
+  //   if (!file) return;
+
   //   if (type === "image") {
   //     setImage(file);
   //     setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview ทันที
   //   }
+
   //   if (type === "pdf_url") {
   //     setPdfFile(file);
+  //     setPreviewPdf(URL.createObjectURL(file)); // ✅ อัปเดต Preview PDF ทันที
   //   }
   // };
+
   const handleFileChange = (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
 
     if (type === "image") {
+      const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+      if (!allowedTypes.includes(file.type)) {
+        alert("กรุณาเลือกไฟล์ที่เป็น .png, .jpg หรือ .jpeg เท่านั้น");
+        return;
+      }
+
       setImage(file);
-      setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview ทันที
+      setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview
     }
 
     if (type === "pdf_url") {
+      if (file.type !== "application/pdf") {
+        alert("กรุณาเลือกไฟล์ PDF เท่านั้น");
+        return;
+      }
+
       setPdfFile(file);
-      setPreviewPdf(URL.createObjectURL(file)); // ✅ อัปเดต Preview PDF ทันที
+      setPreviewPdf(URL.createObjectURL(file)); // ✅ แสดง Preview PDF
     }
+  };
+
+  const removeSingleImage = (dayIndex, imgIndex) => {
+    setDays((prevDays) => {
+      const updated = [...prevDays];
+  
+      const currentImages = [...(updated[dayIndex].images || [])]; // ✅ clone รูป
+      const filtered = currentImages.filter((_, i) => i !== imgIndex); // ✅ ไม่ใช้ splice
+  
+      updated[dayIndex] = {
+        ...updated[dayIndex], // ✅ เผื่อมี field อื่นด้วย
+        images: filtered,
+      };
+  
+      return updated;
+    });
   };
 
   // ✅ ลบ PDF
@@ -198,9 +227,28 @@ function AddTour() {
 
   const handleFileChangeDay = (dayIndex, files) => {
     const updatedDays = [...days];
-    updatedDays[dayIndex].images = Array.from(files).slice(0, 4); // ✅ จำกัดที่ 4 รูป
+    const currentImages = updatedDays[dayIndex].images || [];
+
+    const newFiles = Array.from(files);
+
+    // ✅ รวมภาพเดิม + ใหม่
+    const combined = [...currentImages, ...newFiles];
+
+    if (combined.length > 4) {
+      Swal.fire({
+        icon: "warning",
+        title: "อัปโหลดได้สูงสุด 4 รูป",
+        text: "คุณสามารถอัปโหลดได้ไม่เกิน 4 รูปต่อวัน",
+        confirmButtonText: "ตกลง",
+      });
+
+      // ✅ ตัดให้เหลือ 4 รูป แล้วไม่อัปเดต state
+      return;
+    }
+
+    updatedDays[dayIndex].images = combined;
     setDays(updatedDays);
-    console.log("days updated", updatedDays); // ✅ Debug เพื่อเช็คว่ามีไฟล์รูปเข้าไหม
+    // console.log(`📷 Day ${dayIndex} now has ${combined.length} image(s)`);
   };
 
   // ✅ อัปเดตข้อมูลฟอร์มหลัก (Tour)
@@ -267,7 +315,6 @@ function AddTour() {
         ), // ✅ ตรวจสอบไฟล์ที่ถูกส่ง
       })),
     });
-
     // return;
 
     try {
@@ -377,7 +424,9 @@ function AddTour() {
                 </select>
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
-                <label className="block mt-4 font-bold">พื้นที่ {requirefield}</label>
+                <label className="block mt-4 font-bold">
+                  พื้นที่ {requirefield}
+                </label>
                 <input
                   value={formData.locations}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
@@ -415,9 +464,7 @@ function AddTour() {
                 />
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
-                <label className="block mt-4 font-bold">
-                จำนวนสมาชิก
-                </label>
+                <label className="block mt-4 font-bold">จำนวนสมาชิก</label>
                 <input
                   value={formData.travel_type}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
@@ -435,7 +482,7 @@ function AddTour() {
                   value={formData.price}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
                   type="text"
-                  name="price"  
+                  name="price"
                   placeholder="ราคา"
                   onChange={handleChange}
                   required
@@ -484,7 +531,7 @@ function AddTour() {
                   name="image"
                   id="fileUploadCover"
                   onChange={(e) => handleFileChange(e, "image")}
-                  accept="image/*"
+                  accept=".png, .jpg, .jpeg"
                 />
                 <label
                   htmlFor="fileUploadCover"
@@ -614,44 +661,50 @@ function AddTour() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <h4>อัปโหลดรูปภาพของวันเดินทาง (สูงสุด 4 รูป)</h4>
-                  <div className="flex overflow-auto">
-                    {day.images.length > 0 && (
-                      <div>
-                        <div className="flex gap-2 my-3">
-                          {day.images.map((img, imgIndex) => (
-                            <img
-                              key={imgIndex}
-                              src={
-                                typeof img === "string"
-                                  ? img
-                                  : URL.createObjectURL(img)
-                              }
-                              alt={`Day ${index + 1}`}
-                              className="w-1/2 h-1/2 object-cover border rounded-lg"
-                            />
-                          ))}
-                        </div>
+
+                  <div className="flex gap-4 overflow-x-auto my-4">
+                    {days[index]?.images?.map((img, imgIndex) => (
+                      <div
+                        key={imgIndex}
+                        className="relative w-[300px] h-[200px] rounded overflow-auto border shadow"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => removeSingleImage(index, imgIndex)}
+                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+                        >
+                          &times;
+                        </button>
+                        <img
+                          src={
+                            typeof img === "string"
+                              ? img
+                              : URL.createObjectURL(img)
+                          }
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                    )}
+                    ))}
                   </div>
+
                   <div className="flex items-center gap-2">
                     <input
                       className="hidden"
                       type="file"
                       multiple
                       id={`fileUpload${index}`}
-                      accept="image/*"
+                      accept=".png, .jpg, .jpeg"
                       onChange={(e) =>
                         handleFileChangeDay(index, e.target.files)
                       }
                     />
                     <label
                       htmlFor={`fileUpload${index}`}
-                      className="cursor-pointer w-1/2 flex justify-center items-center bg-indigo-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 transition gap-2"
+                      className="cursor-pointer w-1/6 flex justify-center items-center bg-indigo-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 transition gap-2"
                     >
                       <FiUploadCloud size={20} /> อัพโหลดภาพ
                     </label>
-                    {/* 🔹 ปุ่ม Clear รูปของแต่ละวัน */}
                     <button
                       type="button"
                       className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg shadow-md"

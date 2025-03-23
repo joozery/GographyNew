@@ -9,10 +9,10 @@ const TripIncludes = ({ data }) => {
             <div className="bg-[#ECF1F8] p-2 rounded-lg">
               <LuNotebookPen className="text-[#3F72B7]" size={20} />
             </div>
-            <span className="text-[#3F72B7] font-semibold">โน้ต</span>
+            <span className="text-[#3F72B7] font-semibold">Terms And Conditions</span>
           </div>
         </div>
-        <div className="p-3 overflow-hidden">
+        <div className="p-3 text-editor">
           {/* หัวข้อทริป
           <h2 className="text-3xl font-semibold flex items-center gap-2 mt-4 text-black">
             ราคา 68,900 บาท
@@ -155,7 +155,8 @@ const TripIncludes = ({ data }) => {
             วิถีและพฤติกรรมของประชาชนในประเทศที่เดินทางไป
           </p> */}
           {data ? (
-              <div
+              <div 
+              className="p-3"
                 dangerouslySetInnerHTML={{ __html: data }}
               ></div>
             ) : (

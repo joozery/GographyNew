@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { LuCalendarX, LuDot, LuMapPin } from "react-icons/lu";
+import { LuCalendarDays, LuCalendarX, LuDot, LuMapPin } from "react-icons/lu";
 
 const DayOneItinerary = ({ countDays }) => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -33,7 +33,7 @@ const DayOneItinerary = ({ countDays }) => {
                   <LuMapPin />
                   <span>{day.location}</span>
                   <LuDot />
-                  <LuCalendarX />
+                  <LuCalendarDays />
                   <span>{new Date(day.date).toLocaleDateString("th-TH")}</span>
                 </div>
               </div>

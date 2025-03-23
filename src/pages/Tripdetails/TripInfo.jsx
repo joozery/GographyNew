@@ -182,11 +182,11 @@ const TripInfo = ({ data }) => {
             <div className="bg-[#ECF1F8] p-2 rounded-lg">
               <LuNotebookPen className="text-[#3F72B7]" size={20} />
             </div>
-            <span className="text-[#3F72B7] font-semibold">โน้ต</span>
+            <span className="text-[#3F72B7] font-semibold">Highlight</span>
           </div>
 
           {/* หัวข้อทริป */}
-          <div className="p-3 bg-[#F6F6F680]">
+          <div className="p-3 bg-[#F6F6F680] text-editor">
             {/* <h2 className="text-3xl font-bold flex items-center gap-2 mt-4 text-black">
               🌌 ทริปล่าแสงเหนือ: Lofoten, Senja, Tromsø
             </h2>
@@ -282,6 +282,7 @@ const TripInfo = ({ data }) => {
           </div> */}
             {DataTour.information ? (
               <div
+              className="p-3"
                 dangerouslySetInnerHTML={{ __html: DataTour.information }}
               ></div>
             ) : (

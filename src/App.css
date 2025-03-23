@@ -84,3 +84,9 @@ a[href*="facebook-reviews-widget"] {
   background: 0;
   box-shadow: none !important; /* ลบเงาฟ้าที่เกิดจาก focus */
 }
+
+.text-editor ul {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+}

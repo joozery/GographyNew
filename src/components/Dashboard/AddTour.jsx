@@ -8,6 +8,9 @@ import { FiUploadCloud } from "react-icons/fi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import CountryFlag from "../CountryFlag";
+import { Select } from "antd";
+import TagInput from "../Tags";
+import EditableTagGroup from "../Tags";
 
 function AddTour() {
   const navigate = useNavigate();
@@ -140,7 +143,7 @@ function AddTour() {
       setImage(file);
       setPreviewImage(URL.createObjectURL(file)); // ✅ แสดง Preview
     }
-  }
+  };
 
   // ✅ อัปเดตค่าของวันเดินทาง
   const handleDayChange = (index, field, value) => {
@@ -183,9 +186,9 @@ function AddTour() {
   const handlePdfChange = (e) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
-  
+
     const newFiles = files.filter((file) => file.type === "application/pdf");
-  
+
     setPdfFile((prev) => {
       // ✅ ห้ามซ้ำ: ใช้ file.name + file.lastModified เช็ก
       const uniqueNewFiles = newFiles.filter(
@@ -196,32 +199,29 @@ function AddTour() {
               existing.lastModified === newFile.lastModified
           )
       );
-  
+
       // ✅ ถ้าไม่มีไฟล์ใหม่ให้ return prev
       if (uniqueNewFiles.length === 0) return prev;
-  
+
       const combined = [...prev, ...uniqueNewFiles];
-  
+
       if (combined.length > 3) {
         alert("สามารถอัปโหลดไฟล์ PDF ได้สูงสุด 3 ไฟล์");
         e.target.value = null; // รีเซ็ตค่า input ถ้ามีการเลือกเกิน
         return prev;
       }
-  
+
       return combined;
     });
-  
+
     e.target.value = null; // รีเซ็ต input หลังจากอัปโหลด
   };
-  
-  
+
   useEffect(() => {
     // เมื่อ `pdfFile` เปลี่ยนแปลง จะอัปเดต `previewPdf`
     const newPreviewUrls = pdfFile.map((file) => URL.createObjectURL(file));
     setPreviewPdf(newPreviewUrls);
   }, [pdfFile]); // รันเมื่อ `pdfFile` เปลี่ยนแปลง
-  
-
 
   const removeSingleImage = (dayIndex, imgIndex) => {
     setDays((prevDays) => {
@@ -244,7 +244,6 @@ function AddTour() {
     setPdfFile((prev) => prev.filter((_, i) => i !== indexToRemove));
     setPreviewPdf((prev) => prev.filter((_, i) => i !== indexToRemove));
   };
-
 
   const handleFileChangeDay = (dayIndex, files) => {
     const updatedDays = [...days];
@@ -396,6 +395,10 @@ function AddTour() {
     }
   };
 
+  useEffect(() => {
+    console.log(formData.included);
+  }, [formData.included]);
+
   return (
     <div>
       <h2>{tourId ? "แก้ไขทัวร์" : "เพิ่มทัวร์"}</h2>
@@ -527,24 +530,51 @@ function AddTour() {
 
               <div className="flex flex-col justify-start items-start gap-2">
                 <label className="block mt-4 font-bold">สิ่งที่มี</label>
-                <input
+                {/* <input
                   value={formData.included}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
                   type="text"
                   name="included"
                   placeholder="กรอกแบบ ประกัน,,ช่างภาพ,,รวมค่าที่พัก เท่านั้น"
                   onChange={handleChange}
+                /> */}
+                {/* <Select
+                  className="border rounded-lg p-2"
+                  mode="tags"
+                  style={{ width: "100%" }}
+                  placeholder="พิมพ์แล้วกด Enter เช่น ประกัน, ช่างภาพ"
+                  value={formData.included ? formData.included.split(",,") : []}
+                  onChange={(values) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      included: values.join(",,"), // แปลงกลับเป็น string แยกด้วย ,,
+                    }));
+                  }}
+                /> */}
+                <EditableTagGroup
+                  className="border rounded-lg p-2 w-full"
+                  value={formData.included}
+                  onChange={(val) =>
+                    setFormData((prev) => ({ ...prev, included: val }))
+                  }
                 />
               </div>
               <div className="flex flex-col justify-start items-start gap-2">
                 <label className="block mt-4 font-bold">สิ่งที่ไม่มี</label>
-                <input
+                {/* <input
                   value={formData.not_included}
                   className="border border-gray-200 rounded-lg p-2 h-12 w-full"
                   type="text"
                   name="not_included"
                   placeholder="กรอกแบบ กิจกรรม,,ค่าอาหาร,,ตั๋วเครื่องบิน เท่านั้น"
                   onChange={handleChange}
+                /> */}
+                <EditableTagGroup
+                  className="border rounded-lg p-2 w-full"
+                  value={formData.not_included}
+                  onChange={(val) =>
+                    setFormData((prev) => ({ ...prev, not_included: val }))
+                  }
                 />
               </div>
               <div className="flex flex-col justify-start items-start gap-2">

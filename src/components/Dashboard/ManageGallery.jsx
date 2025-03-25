@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FiUploadCloud, FiTrash2, FiXCircle } from "react-icons/fi";
 import { thumbnailURL } from "../../helper/thumnail-resize";
+import Swal from "sweetalert2";
 
 const API_BASE_URL = "https://servergogo-app-209f1146e735.herokuapp.com/api";
 const GALLERY_API = `${API_BASE_URL}/gallery`;

@@ -20,25 +20,25 @@ export default function Header() {
       }
     };
 
-    fetchNotifications();
+    // fetchNotifications();
 
     // ✅ เปิด WebSocket สำหรับแจ้งเตือนเรียลไทม์
-    const ws = new WebSocket("ws://localhost:3003"); // แก้ไขพอร์ตให้ตรง
-ws.onmessage = (event) => {
-  const newNotification = JSON.parse(event.data);
-  setNotifications((prev) => [newNotification, ...prev]);
-  setUnreadCount((prev) => prev + 1);
-  playNotificationSound(); // เล่นเสียงแจ้งเตือน
-};
+    // const ws = new WebSocket("ws://localhost:3003"); // แก้ไขพอร์ตให้ตรง
+// ws.onmessage = (event) => {
+//   const newNotification = JSON.parse(event.data);
+//   setNotifications((prev) => [newNotification, ...prev]);
+//   setUnreadCount((prev) => prev + 1);
+//   playNotificationSound(); // เล่นเสียงแจ้งเตือน
+// };
 
-    return () => ws.close();
+//     return () => ws.close();
   }, []);
 
   // ✅ ฟังก์ชันเล่นเสียงแจ้งเตือน
-  const playNotificationSound = () => {
-    const audio = new Audio("/sounds/notification.mp3"); // เสียงแจ้งเตือน
-    audio.play();
-  };
+  // const playNotificationSound = () => {
+  //   const audio = new Audio("/sounds/notification.mp3"); // เสียงแจ้งเตือน
+  //   audio.play();
+  // };
 
   return (
     <header className="header">

@@ -106,7 +106,7 @@ const TripHeader = ({ tourId , HeaderData }) => {
                     key={index}
                     src={item.image_url} // ✅ ใช้ URL จาก API
                     alt={`Trip ${index + 1}`}
-                    className="w-44 h-32 rounded-lg shadow-md"
+                    className="w-[180px] h-[130px] object-cover rounded-lg shadow-md"
                   />
                 ))
               )}

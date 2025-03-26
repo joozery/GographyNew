@@ -54,7 +54,7 @@ const CountryCarousel = () => {
           >
             <div className="text-center">
               {/* <div className="text-4xl">{country.flag}</div> */}
-              <span className={`fi fi-${country.flag}`}></span>
+              <span className={`fi fi-${country.flag} text-3xl`}></span>
               <p className="mt-2 text-sm text-[#3F72B7]">{country.name}</p>
             </div>
           </SwiperSlide>

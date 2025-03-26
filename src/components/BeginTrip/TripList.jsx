@@ -8,6 +8,7 @@ import { tr } from "framer-motion/client";
 import { LuArrowRight } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import CountryFlag from "../CountryFlag";
+import { thumbnailURL } from "../../helper/thumnail-resize";
 
 const TripList = ({ trips }) => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const TripList = ({ trips }) => {
               {/* ✅ รูปภาพ */}
               <div className="relative">
                 <img
-                  src={trip.image || ""}
+                  src={thumbnailURL(trip.image) || ""}
                   alt={trip.country_name || ""}
                   className="w-full h-48 object-cover"
                 />

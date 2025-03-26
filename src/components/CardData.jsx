@@ -1,15 +1,20 @@
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import axios from "axios";
 import CountryFlag from "./CountryFlag";
+import { Switch } from "antd";
+import TourStatusSwitch from "./TourStatusSwitch";
+import { thumbnailURL } from "../helper/thumnail-resize";
 
 const API_BASE_URL =
   "https://servergogo-app-209f1146e735.herokuapp.com/api/tours";
 
 const TourCard = ({ tour, Success }) => {
   const navigate = useNavigate();
+
+  const [newStatus, setStatus] = useState(tour.status);
 
   useEffect(() => {
     console.log(tour);
@@ -41,9 +46,16 @@ const TourCard = ({ tour, Success }) => {
     });
   };
 
+  // useEffect(() => {
+  //   if (tour?.status) {
+  //     setStatus(tour.status.toString());
+  //   }
+  // }, [tour]);
+
   return (
-    <div className="w-full rounded overflow-hidden shadow-lg mt-2 bg-white">
-      {tour.image ? (
+    <div className="w-full h-full flex flex-col rounded overflow-hidden shadow-lg mt-2 bg-white">
+      {/* รูปภาพ */}
+      {/* {tour.image ? (
         <img
           className="w-full h-40 object-cover"
           src={tour.image}
@@ -55,8 +67,51 @@ const TourCard = ({ tour, Success }) => {
           src="https://placehold.co/600x400"
           alt="placeholder"
         />
-      )}
-      <div className="flex flex-col gap-2 px-5 pt-4">
+      )} */}
+      <div className="relative">
+        {tour.image ? (
+          <img
+            className="w-full h-40 object-cover filter brightness-[90%]"
+            src={thumbnailURL(tour.image)}
+            alt={tour.tour_name}
+          />
+        ) : (
+          <img
+            className="w-full h-40 object-cover filter brightness-[90%]"
+            src="https://placehold.co/600x400"
+            alt="placeholder"
+          />
+        )}
+
+        {/* ✅ สถานะ Public: วงกลมเขียวกระพริบ */}
+        {tour.status === "1" && (
+          <div className="absolute top-2 right-2 flex items-center gap-1">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            <span className="text-sm text-white px-1 py-0.5 rounded bg-gray-50-">
+              Public
+            </span>
+          </div>
+        )}
+
+        {/* ✅ สถานะ Draft: ป้ายสีเหลืองปกติ */}
+        {tour.status === "0" && (
+         <div className="absolute top-2 right-2 flex items-center gap-1">
+            <span className="relative flex h-3 w-3">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-gray-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+            </span>
+            <span className="text-sm text-white px-1 py-0.5 rounded bg-gray-50-">
+              Draft
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* ส่วนข้อมูล + ทำให้ยืดเต็มพื้นที่ได้ */}
+      <div className="flex flex-col gap-2 px-5 pt-4 flex-grow">
         <div className="font-bold text-xl mb-1">{tour.tour_name}</div>
         <CountryFlag countryCodes={tour.country_emoji} />
         <span className="text-gray-700 text-base">
@@ -74,8 +129,8 @@ const TourCard = ({ tour, Success }) => {
         </span>
       </div>
 
-      {/* ✅ ปุ่มแก้ไข & ลบ */}
-      <div className="flex items-center justify-between px-5 py-3">
+      {/* ปุ่มแก้ไข / ลบ ดันให้อยู่ล่างสุดเสมอ */}
+      {/* <div className="mt-auto flex items-center justify-between px-5 py-3">
         <button
           onClick={() => navigate(`/admin/edit-tour/${tour.id}`)}
           className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-blue-600"
@@ -88,6 +143,32 @@ const TourCard = ({ tour, Success }) => {
         >
           <FiTrash2 /> ลบ
         </button>
+      </div> */}
+      <div className="mt-auto flex flex-col gap-2 px-5 py-3">
+        {/* ปุ่มแก้ไข/ลบ */}
+        <div className="mt-auto flex items-center justify-between gap-2">
+          <button
+            onClick={() => navigate(`/admin/edit-tour/${tour.id}`)}
+            className="w-1/2 bg-blue-500 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 hover:bg-blue-600"
+          >
+            <FiEdit /> แก้ไข
+          </button>
+          <button
+            onClick={handleDelete}
+            className="w-1/2 bg-red-500 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 hover:bg-red-600"
+          >
+            <FiTrash2 /> ลบ
+          </button>
+        </div>
+
+        {/* ✅ สวิตช์สถานะ */}
+        <div className="flex items-center justify-center gap-2 mt-2">
+          <span className="text-sm">
+            {tour.status === "1" ? "Public" : "Draft"}
+          </span>
+
+          <TourStatusSwitch tour={tour} Success={Success} />
+        </div>
       </div>
     </div>
   );

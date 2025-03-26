@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CountryFlag from "../CountryFlag";
+import { thumbnailURL } from "../../helper/thumnail-resize";
 
 const RecommendedTrip = ({ data }) => {
   if (!data) {
@@ -77,7 +78,7 @@ const RecommendedTrip = ({ data }) => {
         {/* ✅ รูปภาพ */}
         <div className="relative w-full">
           <img
-            src={tour[0].image}
+            src={thumbnailURL(tour[0].image)}
             alt="Sweden"
             className="w-[400px] h-[300px] rounded-lg object-cover"
           />

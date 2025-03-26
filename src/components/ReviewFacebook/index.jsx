@@ -6,7 +6,7 @@ const ReviewFacebook = () => {
           <span className="text-lg font-semibold text-[#18283E]">
             100+ รีวิวจากลูกค้าจริง
           </span>
-          <span className="bg-[#D4D9E033] text-[#3F72B7] text-xs font-semibold px-2 py-1 rounded-full">
+          <span className="bg-[#D4D9E033] text-[#3F72B7] text-sm font-semibold px-2.5 py-1.5 rounded-full">
             100% แนะนำ
           </span>
         </div>

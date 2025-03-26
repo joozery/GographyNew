@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { FiPlusCircle } from "react-icons/fi";
 import TourCard from "../CardData";
 import { FaSpinner } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 const API_BASE_URL = "https://servergogo-app-209f1146e735.herokuapp.com/api";
 const TOUR_API = `${API_BASE_URL}/tours`;
 
 const ManageTour = () => {
   const [Data, setData] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ เพิ่ม state สำหรับ loading
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all"); // ✅ new filter state
   const navigate = useNavigate();
 
   // ✅ โหลดข้อมูลทัวร์
@@ -21,7 +23,7 @@ const ManageTour = () => {
     } catch (error) {
       console.error("Error loading tours:", error);
     } finally {
-      setLoading(false); // ✅ ปิด loading เมื่อโหลดข้อมูลเสร็จ
+      setLoading(false);
     }
   };
 
@@ -29,9 +31,16 @@ const ManageTour = () => {
     GetData();
   }, []);
 
+  // ✅ ฟิลเตอร์ข้อมูลตามสถานะ
+  const filteredData = Data.filter((tour) => {
+    if (filter === "public") return tour.status === "1";
+    if (filter === "draft") return tour.status === "0";
+    return true; // all
+  });
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen w-full">
-      {/* ✅ Header */}
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Manage Tours</h1>
         <button
@@ -42,16 +51,29 @@ const ManageTour = () => {
         </button>
       </div>
 
-      {/* ✅ Filter Tabs */}
-      <div className="flex gap-6 border-b-2 border-gray-300 pb-2">
-        <button className="pb-2 px-4 font-semibold border-b-4 border-purple-600 text-purple-600">
-          Published
-        </button>
+      {/* Filter Tabs */}
+      <div className="flex gap-4 border-b border-gray-300 pb-2 mb-4">
+        {["all", "public", "draft"].map((type) => (
+          <button
+            key={type}
+            className={`pb-2 px-4 font-semibold border-b-4 transition ${
+              filter === type
+                ? "border-purple-600 text-purple-600"
+                : "border-transparent text-gray-500 hover:text-purple-600"
+            }`}
+            onClick={() => setFilter(type)}
+          >
+            {type === "all"
+              ? "ทั้งหมด"
+              : type === "public"
+              ? "เผยแพร่"
+              : "ฉบับร่าง"}
+          </button>
+        ))}
       </div>
 
-      {/* ✅ Tour List */}
+      {/* Tour List */}
       {loading ? (
-        // ✅ แสดง Loading Spinner (CSS animation)
         <div className="flex justify-center items-center py-10">
           <div className="flex items-center gap-3">
             <FaSpinner className="animate-spin text-purple-500 text-2xl" />
@@ -59,17 +81,26 @@ const ManageTour = () => {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
-          {Data.length > 0 ? (
-            // ✅ แสดงรายการทัวร์
-            Data.map((tour) => <TourCard key={tour.id} tour={tour} Success={GetData} />)
-          ) : (
-            // ✅ ถ้าไม่มีทัวร์ให้แสดงข้อความ
-            <div className="col-span-4 text-center text-gray-500">
-              No tours found.
-            </div>
-          )}
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={filter} // 💡 รีเฟรชเมื่อเปลี่ยน filter
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-6"
+          >
+            {filteredData.length > 0 ? (
+              filteredData.map((tour) => (
+                <TourCard key={tour.id} tour={tour} Success={GetData} />
+              ))
+            ) : (
+              <div className="col-span-4 text-center text-gray-500 font-medium py-10">
+                ไม่มีทัวร์ในหมวดนี้
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       )}
     </div>
   );

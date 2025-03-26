@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import CountryFlag from "../components/CountryFlag";
+import { thumbnailURL } from "../helper/thumnail-resize";
 
 const API_URL = "https://servergogo-app-209f1146e735.herokuapp.com/api/gallery";
 
@@ -79,7 +80,7 @@ const Gallery = () => {
                 {country.images.map((img, imgIndex) => (
                   <img
                     key={imgIndex}
-                    src={img}
+                    src={thumbnailURL(img)}
                     alt={`${country.name} ${imgIndex + 1}`}
                     className="rounded-lg shadow-md w-full h-64 object-cover"
                   />

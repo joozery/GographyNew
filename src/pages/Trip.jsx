@@ -33,7 +33,9 @@ const years = [currentYear, currentYear - 1, currentYear - 2]; // ✅ เอา�
 const TripPage = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const country_send = params.get("country_send") ? Number(params.get("country_send")) : null;
+  const country_send = params.get("country_send")
+    ? Number(params.get("country_send"))
+    : null;
 
   const [range, setRange] = useState(params.get("month_send") || "");
   const [year, setYear] = useState("");
@@ -222,16 +224,20 @@ const TripPage = () => {
               </div>
             </section>
             {/* ✅ แสดง Section ทริปแนะนำ */}
-            {RecommendData && RecommendData.length > 0 ? (
-              <RecommendedTrip data={RecommendData} />
+            {RecommendData &&
+            RecommendData.filter((item) => item.status === "1").length > 0 ? (
+              <RecommendedTrip
+                data={RecommendData.filter((item) => item.status === "1")}
+              />
             ) : (
               <div className="w-full text-center text-gray-500 text-lg font-semibold py-10">
                 ไม่มีข้อมูลทริปแนะนำ
               </div>
             )}
+
             {/* ✅ แสดง Section ทริปแนะนำ */}
-            {Data && Data.length > 0 ? (
-              <TripList trips={Data} />
+            {Data && Data.filter((item) => item.status === "1").length > 0 ? (
+              <TripList trips={Data.filter((item) => item.status === "1")} />
             ) : (
               <div className="w-full text-center text-gray-500 text-lg font-semibold py-10">
                 ไม่มีข้อมูลทริปที่ค้นหา

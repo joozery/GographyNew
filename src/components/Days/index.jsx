@@ -2,6 +2,7 @@ import { use, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { LuCalendarDays, LuCalendarX, LuDot, LuMapPin } from "react-icons/lu";
+import { thumbnailURL } from "../../helper/thumnail-resize";
 
 const DayOneItinerary = ({ countDays }) => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -101,7 +102,7 @@ const DayOneItinerary = ({ countDays }) => {
                       {day.images.map((img, i) => (
                         <img
                           key={i}
-                          src={img}
+                          src={thumbnailURL(img)}
                           alt={`Day ${day.day_number}`}
                           className="rounded-lg shadow"
                         />

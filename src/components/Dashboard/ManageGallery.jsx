@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FiUploadCloud, FiTrash2, FiXCircle } from "react-icons/fi";
+import { FiUploadCloud, FiTrash2, FiXCircle, FiZoomIn } from "react-icons/fi";
 import { thumbnailURL } from "../../helper/thumnail-resize";
 import Swal from "sweetalert2";
+import { LuZoomIn } from "react-icons/lu";
 
 const API_BASE_URL = "https://servergogo-app-209f1146e735.herokuapp.com/api";
 const GALLERY_API = `${API_BASE_URL}/gallery`;
@@ -17,6 +18,8 @@ const ManageGallery = () => {
   const [galleryImages, setGalleryImages] = useState([]);
   const [groupedByCategory, setGroupedByCategory] = useState({});
   const [selectedCountryView, setSelectedCountryView] = useState(null); // ✅ ดูหมวดหมู่เดียว
+
+  const [previewImage, setPreviewImage] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -260,12 +263,25 @@ const ManageGallery = () => {
                 key={image.id}
                 className="relative bg-white rounded-lg shadow"
               >
-                <img
-                  src={thumbnailURL(image.image_url)}
-                  alt={image.title_th}
-                  loading="lazy"
-                  className="w-full h-32 object-cover rounded-t-lg"
-                />
+                <div className="relative group">
+                  <img
+                    src={thumbnailURL(image.image_url)}
+                    alt={image.title_th}
+                    loading="lazy"
+                    className="w-full h-32 object-cover rounded-t-lg cursor-pointer"
+                  />
+
+                  {/* Overlay: ขยายภาพ */}
+                  <div
+                    onClick={() => setPreviewImage(image.image_url)}
+                    className="absolute cursor-pointer inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-lg"
+                  >
+                    <FiZoomIn size={24} className="text-white mb-1 group-hover:scale-110 transition" />
+                    {/* <span className="text-white text-sm font-semibold">
+                      ขยายภาพ
+                    </span> */}
+                  </div>
+                </div>
 
                 <p className="text-sm text-gray-700 p-2 mb-0">
                   ชื่อรูป : {image.title_th}
@@ -282,29 +298,49 @@ const ManageGallery = () => {
         </>
       ) : (
         <>
-        <div className="text-2xl font-bold mb-3">โฟลเดอร์รูปภาพแต่ละประเทศ</div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {Object.keys(groupedByCategory).map((categoryId) => (
-            <div
-              key={categoryId}
-              className="flex flex-col justify-center items-center bg-white p-4 rounded-lg shadow-md hover:shadow-lg cursor-pointer hover:bg-gray-50 transition"
-              onClick={() => handleCountryClick(categoryId)}
-            >
-              <span
-                className={`fi fi-${getCategoryFlag(
-                  Number(categoryId)
-                )} text-4xl mb-2`}
-              ></span>
-              <span className="text-lg font-medium text-indigo-800">
-                {getCategoryName(Number(categoryId))}
-              </span>
-              <span className="text-sm text-gray-600">
-                จำนวนรูป: {groupedByCategory[categoryId].length}
-              </span>
-            </div>
-          ))}
-        </div>
+          <div className="text-2xl font-bold mb-3">
+            โฟลเดอร์รูปภาพแต่ละประเทศ
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {Object.keys(groupedByCategory).map((categoryId) => (
+              <div
+                key={categoryId}
+                className="flex flex-col justify-center items-center bg-white p-4 rounded-lg shadow-md hover:shadow-lg cursor-pointer hover:bg-gray-50 transition"
+                onClick={() => handleCountryClick(categoryId)}
+              >
+                <span
+                  className={`fi fi-${getCategoryFlag(
+                    Number(categoryId)
+                  )} text-4xl mb-2`}
+                ></span>
+                <span className="text-lg font-medium text-indigo-800">
+                  {getCategoryName(Number(categoryId))}
+                </span>
+                <span className="text-sm text-gray-600">
+                  จำนวนรูป: {groupedByCategory[categoryId].length}
+                </span>
+              </div>
+            ))}
+          </div>
         </>
+      )}
+
+      {previewImage && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
+          <div className="relative">
+            <button
+              onClick={() => setPreviewImage(null)}
+              className="absolute top-2 right-2 text-white text-xl bg-black/50 rounded-full p-1 h-8 w-8 hover:bg-black"
+            >
+              ✕
+            </button>
+            <img
+              src={previewImage}
+              alt="Preview"
+              className="max-w-[90vw] max-h-[80vh] rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
       )}
     </div>
   );

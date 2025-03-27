@@ -268,19 +268,16 @@ const ManageGallery = () => {
                     src={thumbnailURL(image.image_url)}
                     alt={image.title_th}
                     loading="lazy"
-                    className="w-full h-32 object-cover rounded-t-lg cursor-pointer"
+                    className="w-full h-32 object-cover rounded-t-lg"
                   />
 
-                  {/* Overlay: ขยายภาพ */}
-                  <div
+                  {/* ไอคอนขยายภาพที่มุมขวาล่าง */}
+                  <button
                     onClick={() => setPreviewImage(image.image_url)}
-                    className="absolute cursor-pointer inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-lg"
+                    className="absolute bottom-2 right-2 bg-black/60 hover:bg-black/80 text-white p-1 rounded-full transition-all duration-200"
                   >
-                    <FiZoomIn size={24} className="text-white mb-1 group-hover:scale-110 transition" />
-                    {/* <span className="text-white text-sm font-semibold">
-                      ขยายภาพ
-                    </span> */}
-                  </div>
+                    <FiZoomIn size={18} />
+                  </button>
                 </div>
 
                 <p className="text-sm text-gray-700 p-2 mb-0">
